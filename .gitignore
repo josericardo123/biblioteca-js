@@ -1,0 +1,20 @@
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.sublime-*
+
+# Dependencias (futuro)
+node_modules/
+package-lock.json
+
+# Entorno
+.env
+.env.local
+
+# Logs
+*.log
