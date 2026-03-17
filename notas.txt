@@ -1,0 +1,121 @@
+// Busco la ruta para crear proyecto
+cd ~/XAMPP/htdocs
+
+// Crear carpeta del proyecto
+mkdir biblioteca
+cd biblioteca
+
+// Verificar estar en el proyecto
+pwd
+
+// Inicializar repositorio
+git init
+
+// Verificar que se creó
+ls -la
+
+// Configurar identidad
+git config user.name "Jose Ricardo Cauich Mis"
+git config user.email "josericardocauichmis@gmail.com"
+
+// Verificar configuración
+git config --list
+
+// Crear archivo .gitignore
+// => touch .gitignore
+    # Archivos del sistema
+    .DS_Store
+    Thumbs.db
+    desktop.ini
+
+    # Editor
+    .vscode/
+    .idea/
+    *.sublime-*
+
+    # Dependencias (futuro)
+    node_modules/
+    package-lock.json
+
+    # Entorno
+    .env
+    .env.local
+
+    # Logs
+    *.log
+
+// Verificar
+ls -la | grep .gitignore
+
+// Crear estructura de Archivos
+touch index.html
+touch styles.css
+touch app.js
+
+// Verificar
+// => ls -la
+    .gitignore
+    index.html
+    styles.css
+    app.js
+
+// Ver estado
+git status
+
+// Añadir Archivos
+git add .
+
+// Verificar que están en staging
+git status
+
+// Hacer commit 
+git commit -m "chore: configuración inicial del proyecto"
+
+// Crear repositorio en github 
+    Ve a GitHub y logueate
+
+    Click en "New repository"
+
+    Configurar:
+
+    Repository name: biblioteca-js
+
+    Description: "Sistema de gestión de biblioteca con JavaScript - Proyecto de aprendizaje"
+
+    Public
+
+    NO inicializar con README
+
+    Click en "Create repository"
+
+// Conectar local con Github
+git remote add origin https://github.com/josericardo123/biblioteca-js.git
+
+// Verificar 
+git remote -v 
+
+// Subir código
+git branch -M main
+git push -u origin main
+
+// CHECKPOINT 
+    - Carpeta del proyecto creada
+    - Git inicializado y configurado
+    - .gitignore profesional
+    - Archivos base creados (HTML, CSS, JS)
+    - Primer commit con mensaje profesional
+    - Repositorio en GitHub creado
+    - Código subido a GitHub
+
+## Archivo README creado
+    - [X] Subir a GitHub
+
+## Crear esctructura de carpetas
+    - [X] modules
+    - [X] utils 
+    - [X] data
+## Crear Archivos base
+    - [] utils/validaciones.js
+    - [] data/inicial.js
+    
+

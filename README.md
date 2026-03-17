@@ -129,3 +129,13 @@ docs: - Documentación
 
 chore: - Tareas de mantenimiento
 
+Próximos Pasos
+Implementar primeras validaciones (isValidString, isValidEmail)
+
+Crear ramas feature para cada validación
+
+Realizar commits por cada función implementada
+
+Hacer Pull Requests a develop
+
+Avanzar al siguiente módulo
