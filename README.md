@@ -19,11 +19,21 @@ Sistema de gestión de biblioteca desarrollado con **JavaScript puro** como part
 
 ## 🚀 Características del Proyecto
 
+### PRODUCTO BACKLOG
+📋 PRODUCT BACKLOG (Lista de todo lo que hay que hacer)
+├── 🎯 ÉPICAS (Grandes funcionalidades)
+│   ├── 📦 SPRINT 1: Módulo de Validaciones
+│   ├── 📦 SPRINT 2: Módulo de Libros
+│   ├── 📦 SPRINT 3: Módulo de Usuarios
+│   ├── 📦 SPRINT 4: Módulo de Préstamos
+│   ├── 📦 SPRINT 5: UI y Persistencia
+│   └── 📦 SPRINT 6: Refinamiento y Documentación
+
 ### Fase 1 - Módulo de Validaciones (En progreso)
 - [x] Configuración inicial del proyecto
 - [x] Estructura de carpetas profesional
-- [ ] `isValidString` - Validación de strings
-- [ ] `isValidEmail` - Validación de emails
+- [x] `isValidString` - Validación de strings
+- [x] `isValidEmail` - Validación de emails
 - [ ] `isValidISBN` - Validación de libros
 - [ ] `isValidDate` - Validación de fechas
 - [ ] `isValidNumber` - Validación de números
@@ -77,16 +87,19 @@ cd biblioteca-js
 # Simplemente abre index.html o usa Live Server en VS Code
 
 Sprint Actual: Sprint 1 - Módulo de Validaciones
+✅ Completadas:
+- VAL-01: Estructura base (Tarea 1-3)
+- VAL-02: isValidString (Tarea 4)
+- VAL-03: isValidEmail ✅ (Tarea 5 - Recién terminada)
 
-✅ Configuración inicial completada
+⏳ Pendientes:
+- VAL-04: isValidISBN
+- VAL-05: isValidDate
+- VAL-06: isValidNumber
+- VAL-07: isValidArray
+- VAL-08: isValidId
 
-✅ Estructura de archivos creada
-
-✅ README.md implementado
-
-⏳ Próximo: Implementación de validaciones
-
-Progreso General: 10% (Fase 1 de 4)
+📈 Progreso: 3/8 tareas completadas (37.5%)
 
 🤝 Contribuciones
 Este es un proyecto personal de aprendizaje, pero si tienes sugerencias o encuentras errores, siéntete libre de abrir un issue.
@@ -128,14 +141,3 @@ fix: - Corrección de errores
 docs: - Documentación
 
 chore: - Tareas de mantenimiento
-
-Próximos Pasos
-Implementar primeras validaciones (isValidString, isValidEmail)
-
-Crear ramas feature para cada validación
-
-Realizar commits por cada función implementada
-
-Hacer Pull Requests a develop
-
-Avanzar al siguiente módulo
