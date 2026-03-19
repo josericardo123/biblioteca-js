@@ -34,7 +34,7 @@ Sistema de gestión de biblioteca desarrollado con **JavaScript puro** como part
 - [x] Estructura de carpetas profesional
 - [x] `isValidString` - Validación de strings
 - [x] `isValidEmail` - Validación de emails
-- [ ] `isValidISBN` - Validación de libros
+- [x] `isValidISBN` - Validación de libros
 - [ ] `isValidDate` - Validación de fechas
 - [ ] `isValidNumber` - Validación de números
 - [ ] `isValidArray` - Validación de arrays
@@ -88,12 +88,12 @@ cd biblioteca-js
 
 Sprint Actual: Sprint 1 - Módulo de Validaciones
 ✅ Completadas:
-- VAL-01: Estructura base (Tarea 1-3)
-- VAL-02: isValidString (Tarea 4)
-- VAL-03: isValidEmail ✅ (Tarea 5 - Recién terminada)
+- VAL-01: Estructura base ✅ (Tarea 1-3)
+- VAL-02: isValidString ✅ (Tarea 4)
+- VAL-03: isValidEmail ✅ (Tarea 5)
+- VAL-04: isValidISBN ✅ (Tarea 6 - Recién terminada)
 
 ⏳ Pendientes:
-- VAL-04: isValidISBN
 - VAL-05: isValidDate
 - VAL-06: isValidNumber
 - VAL-07: isValidArray
