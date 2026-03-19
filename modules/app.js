@@ -127,3 +127,39 @@ console.log('Caso 13: "usuario@mi-dominio.com"');
 const email13 = Validaciones.isValidEmail('usuario@mi-dominio.com');
 console.log('Resultado:', email13 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
+
+// modules/app.js - Actualizar la sección de ISBN
+
+console.log('%c📚 Probando isValidISBN:', 'color: green; font-size: 14px; font-weight: bold;');
+console.log('----------------------------------------');
+
+// ISBN-10 válidos
+console.log('📖 ISBN-10 VÁLIDOS:');
+console.log('Caso 1: "84-376-0494-X" (El Quijote - con X)');
+const isbn1 = Validaciones.isValidISBN('84-376-0494-X');
+console.log('Resultado:', isbn1 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('----------------------------------------');
+
+console.log('Caso 2: "843760494X" (sin guiones)');
+const isbn2 = Validaciones.isValidISBN('843760494X');
+console.log('Resultado:', isbn2 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('----------------------------------------');
+
+// ISBN-13 válidos
+console.log('📖 ISBN-13 VÁLIDOS:');
+console.log('Caso 3: "978-84-376-0494-7" (El Quijote edición moderna)');
+const isbn3 = Validaciones.isValidISBN('978-84-376-0494-7');
+console.log('Resultado:', isbn3 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('----------------------------------------');
+
+console.log('Caso 4: "9788437604947" (sin guiones)');
+const isbn4 = Validaciones.isValidISBN('9788437604947');
+console.log('Resultado:', isbn4 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('----------------------------------------');
+
+// ISBN inválidos (para confirmar que detecta errores)
+console.log('❌ ISBN INVÁLIDOS:');
+console.log('Caso 5: "84-376-0494-4" (dígito incorrecto)');
+const isbn5 = Validaciones.isValidISBN('84-376-0494-4');
+console.log('Resultado:', isbn5 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('----------------------------------------');

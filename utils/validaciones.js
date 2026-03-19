@@ -65,25 +65,32 @@ export const Validaciones = {
     /**
      * Valida que un string sea un email valido
      * @param {string} email - Email a validar
-     * @returns {boolean} - true si es valida 
+     * @returns {boolean} - true si es valida
      */
     isValidEmail(email) {
         // Paso 1: Verificar que existe y es string (reusamos nuestra función anterior)
-        if(!this.isValidString(email, 3, 254)) { // Mínimo 3, máximo 254 (estándar RFC)
-            console.error(`❌ isValidEmail: El email debe ser un string válido`);
+        if (!this.isValidString(email, 3, 254)) {
+            // Mínimo 3, máximo 254 (estándar RFC)
+            console.error(
+                `❌ isValidEmail: El email debe ser un string válido`,
+            );
             return false;
         }
-        
+
         // Paso 2: Verificar que no tenga espacios
-        if(email.includes(' ')) {
-            console.error(`❌ isValidEmail: El email no puede contener espacios`);
+        if (email.includes(" ")) {
+            console.error(
+                `❌ isValidEmail: El email no puede contener espacios`,
+            );
             return false;
         }
 
         // Paso 3: Verificar que tenga exactamente un @
         const partes = email.split("@");
-        if(partes.length !== 2) {
-            console.error(`❌ isValidEmail: El email debe tener exactamente un @ (tiene ${partes.length -1})`);
+        if (partes.length !== 2) {
+            console.error(
+                `❌ isValidEmail: El email debe tener exactamente un @ (tiene ${partes.length - 1})`,
+            );
             return false;
         }
 
@@ -91,60 +98,248 @@ export const Validaciones = {
         const [usuario, dominio] = partes;
 
         // Paso 5: Validar usuario
-        if(usuario.length === 0) {
+        if (usuario.length === 0) {
             console.error(`❌ isValidEmail: El usuario no puede estar vacío`);
             return false;
         }
 
-        if(usuario.startsWith('.') || usuario.endsWith('.')) {
-            console.error(`❌ isValidEmail: El usuario no puede empezar o terminar con punto`);
+        if (usuario.startsWith(".") || usuario.endsWith(".")) {
+            console.error(
+                `❌ isValidEmail: El usuario no puede empezar o terminar con punto`,
+            );
             return false;
         }
 
         // Caracteres permitidos con usuario: letras, números, . _ -
-        if(!/^[a-zA-Z0-9._-]+$/.test(usuario)) {
-            console.error(`❌ isValidEmail: usuario contiene caracteres no permitidos`);
+        if (!/^[a-zA-Z0-9._-]+$/.test(usuario)) {
+            console.error(
+                `❌ isValidEmail: usuario contiene caracteres no permitidos`,
+            );
             return false;
         }
 
         // Paso 6: Validar dominio
-        if(dominio.length === 0) {
+        if (dominio.length === 0) {
             console.error(`❌ isValidEmail: El dominio no puede estar vacío`);
             return false;
         }
 
-        if(dominio.startsWith('.') || dominio.endsWith('.')) {
-            console.error(`❌ isValidEmail: El dominio no puede empezar o termniar con punto`);
+        if (dominio.startsWith(".") || dominio.endsWith(".")) {
+            console.error(
+                `❌ isValidEmail: El dominio no puede empezar o termniar con punto`,
+            );
             return false;
         }
 
         // Paso 7: Validar extensión (última parte después del último punto)
-        const partesDominio = dominio.split('.');
+        const partesDominio = dominio.split(".");
         const extension = partesDominio[partesDominio.length - 1];
 
-        if(partesDominio.length < 2) {
-            console.error(`isValidEmail: El dominio debe tener al menos una extensión (ej: .com)`);
+        if (partesDominio.length < 2) {
+            console.error(
+                `isValidEmail: El dominio debe tener al menos una extensión (ej: .com)`,
+            );
             return false;
         }
 
-        if(extension.length < 2 || extension.length > 6) {
-            console.error(`❌ isValidEmail: La extensión debe tener entre 2 y 6 caracteres (tiene ${extension.length})`);
+        if (extension.length < 2 || extension.length > 6) {
+            console.error(
+                `❌ isValidEmail: La extensión debe tener entre 2 y 6 caracteres (tiene ${extension.length})`,
+            );
             return false;
         }
 
-        if(!/^[a-zA-Z]+$/.test(extension)) {
-            console.error(`❌ isValidEmail: La extensión solo puede contener letras`);
+        if (!/^[a-zA-Z]+$/.test(extension)) {
+            console.error(
+                `❌ isValidEmail: La extensión solo puede contener letras`,
+            );
             return false;
         }
 
         // Paso 8: Validar caracteres del dominio (letras, números, puntos, guiones)
-        if(!/^[a-zA-Z0-9.-]+$/.test(dominio)) {
-            console.error(`❌ isValidEmail: El dominio contiene caracteres no permitidos`);
+        if (!/^[a-zA-Z0-9.-]+$/.test(dominio)) {
+            console.error(
+                `❌ isValidEmail: El dominio contiene caracteres no permitidos`,
+            );
             return false;
         }
 
         // Paso 9: si pasa todas las validaciones
         console.log(`✅ isValidEmail: "${email}" es válido`);
         return true;
+    },
+
+    /**
+     * Limpia un ISBN de guiones y espacios
+     * @param {string} isbn - ISBN a limpiar
+     * @returns {string} ISBN limpio
+     * @private
+     */
+    _limpiarISBN(isbn) {
+        return isbn.replace(/[-\s]/g, '');
+    },
+
+    /**
+     * Valida un ISBN-10
+     * @param {string} isbn - ISBN a validar (ya limpio)
+     * @returns {boolean} - true si es válido
+     * @private
+     */
+    _validarISBN10(isbn) {
+        console.log('🔍 Validando ISBN-10:', isbn);
+        
+        // Paso 1: verificar longitud
+        if (isbn.length !== 10) {
+            console.log('   ❌ Longitud incorrecta:', isbn.length);
+            return false;
+        }
+
+        // Paso 2: Calcular suma de verificación
+        let suma = 0;
+        console.log('   Calculando suma:');
+        
+        for (let i = 0; i < 9; i++) {
+            const digito = parseInt(isbn[i], 10);
+            console.log(`   Posición ${i+1}: dígito ${isbn[i]} × ${10 - i} = ${digito * (10 - i)}`);
+            if (isNaN(digito)) {
+                console.log('   ❌ No es dígito');
+                return false;
+            }
+            suma += digito * (10 - i);
+        }
+
+        // Paso 3: Validar último carácter
+        const ultimo = isbn[9].toUpperCase();
+        let ultimoValor;
+
+        console.log(`   Último carácter: "${ultimo}"`);
+        
+        if (ultimo === "X") {
+            ultimoValor = 10;
+            console.log('   → Valor: 10 (X)');
+        } else {
+            ultimoValor = parseInt(ultimo, 10);
+            console.log(`   → Valor: ${ultimoValor}`);
+            if (isNaN(ultimoValor)) {
+                console.log('   ❌ Último carácter inválido');
+                return false;
+            }
+        }
+
+        // Paso 4: Verificar suma
+        suma += ultimoValor;
+        console.log(`   Suma total: ${suma}`);
+        console.log(`   ${suma} ÷ 11 = ${Math.floor(suma/11)} residuo ${suma % 11}`);
+        
+        return suma % 11 === 0;
+    },
+
+    /**
+     * Valida un ISBN-13
+     * @param {string} isbn - ISBN a validar (ya limpio)
+     * @returns {boolean} - true si es válido
+     * @private
+     */
+    _validarISBN13(isbn) {
+        console.log('🔍 Validando ISBN-13:', isbn);
+        
+        // Paso 1: Verificar longitud
+        if (isbn.length !== 13) {
+            console.log('   ❌ Longitud incorrecta:', isbn.length);
+            return false;
+        }
+
+        // Paso 2: Verificar prefijo
+        const prefijo = isbn.substring(0, 3);
+        console.log('   Prefijo:', prefijo);
+        
+        if (prefijo !== "978" && prefijo !== "979") {
+            console.log('   ❌ Prefijo inválido');
+            return false;
+        }
+
+        // Paso 3: Calcular suma
+        let suma = 0;
+        console.log('   Calculando suma:');
+        
+        for (let i = 0; i < 12; i++) {
+            const digito = parseInt(isbn[i], 10);
+            const multiplicador = (i + 1) % 2 === 0 ? 3 : 1;
+            const producto = digito * multiplicador;
+            
+            console.log(`   Posición ${i+1}: dígito ${isbn[i]} × ${multiplicador} = ${producto}`);
+            
+            if (isNaN(digito)) {
+                console.log('   ❌ No es dígito');
+                return false;
+            }
+            
+            suma += producto;
+        }
+
+        // Paso 4: Calcular dígito de control
+        const digitoControl = parseInt(isbn[12], 10);
+        console.log(`   Dígito control proporcionado: ${digitoControl}`);
+        
+        if (isNaN(digitoControl)) {
+            console.log('   ❌ Dígito control inválido');
+            return false;
+        }
+
+        const resto = suma % 10;
+        const digitoEsperado = resto === 0 ? 0 : 10 - resto;
+        
+        console.log(`   Suma total: ${suma}`);
+        console.log(`   Resto: ${resto}`);
+        console.log(`   Dígito esperado: ${digitoEsperado}`);
+        console.log(`   ${digitoControl} === ${digitoEsperado}? ${digitoControl === digitoEsperado ? '✅' : '❌'}`);
+
+        return digitoControl === digitoEsperado;
+    },
+
+    /**
+     * Valida que un string sea un ISBN válido (10 0 13 dígitos)
+     * @param {string} isbn - ISBN a validar
+     * @returns {boolean} - true si es válido
+     */
+    isValidISBN(isbn) {
+        // Paso 1: Verificar que existe  y es string
+        if (!this.isValidString(isbn, 1)) {
+            console.error(`❌ isValidISBN: El ISBN debe ser un string válido`);
+            return false;
+        }
+
+        // Paso 2: Limpiar guiones y espacios
+        const isbnLimpio = this._limpiarISBN(isbn);
+
+        // Paso 3: Verificar que después de limpiar no esté vacío
+        if (isbnLimpio.length === 0) {
+            console.error(`❌ isValidISBN: El ISBN no puede estar vacío`);
+            return false;
+        }
+
+        // Paso 4: Validar según longitud
+        let esValido = false;
+        if (isbnLimpio.length === 10) {
+            esValido = this._validarISBN10(isbnLimpio);
+        } else if (isbnLimpio.length === 13) {
+            esValido = this._validarISBN13(isbnLimpio);
+        } else {
+            console.error(
+                `❌ isValidISBN: debe tener 10 o 13 dígitos (tiene ${isbnLimpio.length})`,
+            );
+            return false;
+        }
+
+        // Paso 5: Mostrar resultado
+        if (esValido) {
+            console.log(`✅ isValidISBN: "${isbn}" es válido`);
+        } else {
+            console.error(
+                `❌ isValidISBN: "${isbn}" no es válido (dígito de control incorrecto)`,
+            );
+        }
+
+        return esValido;
     },
 };
