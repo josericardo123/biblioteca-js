@@ -569,5 +569,84 @@ export const Validaciones = {
         // Paso 6: Si pasa todas las validaciones
         console.log(`✅ isValidArray: Array de ${valor.length} elemento(s) es válido`);
         return true;
+    },
+
+    /**
+     * Valida que un valor sea un ID válido
+     * @param {*} valor - El valor a validar
+     * @param {Object} opciones - Opciones de validación
+     * @param {boolean} opciones.permitirString - Si true, permiste IDs en formato string (por default false)
+     * @param {number} opciones.min - Valor mínimo permitido (por defecto : 1)
+     * @param {number} opciones.max - Valor máximo permitido (por defecto 999999)
+     * @returns {boolean} - true si es válido
+     */
+
+    isValidId(valor, opciones = {}) {
+        const {
+            permitirString = false,
+            min = 1,
+            max = 999999
+        } = opciones;
+
+        // Paso 1: Verificar que existe
+        if(valor === undefined || valor === null) {
+            console.error(`❌ isValidId: El ID no puede ser null o undefined`);
+            return false;
+        }
+
+        // Paso 2: Convertir a número si es string y está permitido
+        let idNumerico = valor;
+        let esString = false;
+
+        if(typeof valor === 'string') {
+            if(!permitirString) {
+                console.error(`❌ isValidId: Se esperaba un número, se recibió string: ${valor}`);
+                return false;
+            }
+
+            // Verificar que el string solo contenga dígitos
+            if(!/^\d+$/.test(valor)) {
+                console.error(`❌ isValidId: El string debe contener solo dígitos (recibio: "${valor}")`);
+                return false;
+            }
+
+            idNumerico = Number(valor);
+            esString = true;
+        }
+
+        // Paso 3: Verificar que sea un número
+        if(typeof idNumerico !== 'number') {
+            console.error(`❌ isValidId: Se esperaba un número, se recibio ${typeof valor}`);
+            return false;
+        }
+
+        // Paso 4: Verificar que no sea NaN o Infinity
+        if(isNaN(idNumerico) || !isFinite(idNumerico)) {
+            console.error(`❌ isValidId: El ID no es un número válido`);
+            return false;
+        }
+
+        // Paso 5: Verificar que sea entero
+        if(!Number.isInteger(idNumerico)) {
+            console.error(`❌ isValidId: El ID debe ser un número entero (recibido: ${idNumerico})`);
+            return false;
+        }
+
+        // Paso 6: Verificar que sea positivo
+        if(idNumerico < min) {
+            console.log(`❌ isValidId: El ID debe ser mayor o igual a ${min} (recibido: ${idNumerico})`);
+            return false;
+        }
+
+        // Paso 7: Verificar rango máximo
+        if(idNumerico > max) {
+            console.error(`❌ idValidId: El ID debe ser menor o igual a ${max} (recibido: ${idNumerico})`);
+            return false;
+        }
+
+        // Paso 8: Si pasa todas las validación
+        const tipo = esString ? `string "${valor}"` : `número ${idNumerico}`;
+        console.log(`✅ isValidId: ${tipo} es válido`);
+        return true;
     }
 };

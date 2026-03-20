@@ -375,99 +375,212 @@
 // console.log('Resultado:', num17 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 // console.log('----------------------------------------');
 
-// modules/app.js - Añadir después de las pruebas de número
+// console.log('%c📦 Probando isValidArray:', 'color: purple; font-size: 14px; font-weight: bold;');
+// console.log('----------------------------------------');
 
-console.log('%c📦 Probando isValidArray:', 'color: purple; font-size: 14px; font-weight: bold;');
+// // =============================================
+// // ARRAYS VÁLIDOS (SIN OPCIONES)
+// // =============================================
+// console.log('📦 ARRAYS VÁLIDOS (sin opciones):');
+
+// console.log('Caso 1: [] (array vacío)');
+// const arr1 = Validaciones.isValidArray([]);
+// console.log('Resultado:', arr1 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 2: [1, 2, 3]');
+// const arr2 = Validaciones.isValidArray([1, 2, 3]);
+// console.log('Resultado:', arr2 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 3: ["a", "b", "c"]');
+// const arr3 = Validaciones.isValidArray(["a", "b", "c"]);
+// console.log('Resultado:', arr3 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// // =============================================
+// // ARRAYS VÁLIDOS (CON OPCIONES)
+// // =============================================
+// console.log('📦 ARRAYS VÁLIDOS (con opciones):');
+
+// console.log('Caso 4: [1, 2, 3] con { noVacio: true }');
+// const arr4 = Validaciones.isValidArray([1, 2, 3], { noVacio: true });
+// console.log('Resultado:', arr4 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 5: ["libro1", "libro2"] con { tipoElemento: "string" }');
+// const arr5 = Validaciones.isValidArray(["libro1", "libro2"], { tipoElemento: "string" });
+// console.log('Resultado:', arr5 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 6: [1, 2, 3] con { tipoElemento: "number" }');
+// const arr6 = Validaciones.isValidArray([1, 2, 3], { tipoElemento: "number" });
+// console.log('Resultado:', arr6 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 7: [10, 20, 30] con validador personalizado (números > 5)');
+// const validadorMayor5 = (num) => num > 5;
+// const arr7 = Validaciones.isValidArray([10, 20, 30], { validadorElemento: validadorMayor5 });
+// console.log('Resultado:', arr7 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 8: ["a", "b", "c"] con { noVacio: true, tipoElemento: "string" }');
+// const arr8 = Validaciones.isValidArray(["a", "b", "c"], { noVacio: true, tipoElemento: "string" });
+// console.log('Resultado:', arr8 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// // =============================================
+// // ARRAYS INVÁLIDOS
+// // =============================================
+// console.log('❌ ARRAYS INVÁLIDOS:');
+
+// console.log('Caso 9: "no es array" (string)');
+// const arr9 = Validaciones.isValidArray("no es array");
+// console.log('Resultado:', arr9 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 10: null');
+// const arr10 = Validaciones.isValidArray(null);
+// console.log('Resultado:', arr10 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 11: undefined');
+// const arr11 = Validaciones.isValidArray(undefined);
+// console.log('Resultado:', arr11 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 12: {} (objeto)');
+// const arr12 = Validaciones.isValidArray({});
+// console.log('Resultado:', arr12 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 13: [] con { noVacio: true }');
+// const arr13 = Validaciones.isValidArray([], { noVacio: true });
+// console.log('Resultado:', arr13 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 14: ["a", "b", 1] con { tipoElemento: "string" }');
+// const arr14 = Validaciones.isValidArray(["a", "b", 1], { tipoElemento: "string" });
+// console.log('Resultado:', arr14 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 15: [1, 2, 3] con validador personalizado (números pares)');
+// const validadorPar = (num) => num % 2 === 0;
+// const arr15 = Validaciones.isValidArray([1, 2, 3], { validadorElemento: validadorPar });
+// console.log('Resultado:', arr15 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// modules/app.js - Añadir después de las pruebas de array
+
+console.log('%c🆔 Probando isValidId:', 'color: teal; font-size: 14px; font-weight: bold;');
 console.log('----------------------------------------');
 
 // =============================================
-// ARRAYS VÁLIDOS (SIN OPCIONES)
+// IDs VÁLIDOS (SIN OPCIONES)
 // =============================================
-console.log('📦 ARRAYS VÁLIDOS (sin opciones):');
+console.log('🆔 IDs VÁLIDOS (sin opciones):');
 
-console.log('Caso 1: [] (array vacío)');
-const arr1 = Validaciones.isValidArray([]);
-console.log('Resultado:', arr1 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 1: 1');
+const id1 = Validaciones.isValidId(1);
+console.log('Resultado:', id1 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 2: [1, 2, 3]');
-const arr2 = Validaciones.isValidArray([1, 2, 3]);
-console.log('Resultado:', arr2 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 2: 100');
+const id2 = Validaciones.isValidId(100);
+console.log('Resultado:', id2 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 3: ["a", "b", "c"]');
-const arr3 = Validaciones.isValidArray(["a", "b", "c"]);
-console.log('Resultado:', arr3 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
-
-// =============================================
-// ARRAYS VÁLIDOS (CON OPCIONES)
-// =============================================
-console.log('📦 ARRAYS VÁLIDOS (con opciones):');
-
-console.log('Caso 4: [1, 2, 3] con { noVacio: true }');
-const arr4 = Validaciones.isValidArray([1, 2, 3], { noVacio: true });
-console.log('Resultado:', arr4 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
-
-console.log('Caso 5: ["libro1", "libro2"] con { tipoElemento: "string" }');
-const arr5 = Validaciones.isValidArray(["libro1", "libro2"], { tipoElemento: "string" });
-console.log('Resultado:', arr5 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
-
-console.log('Caso 6: [1, 2, 3] con { tipoElemento: "number" }');
-const arr6 = Validaciones.isValidArray([1, 2, 3], { tipoElemento: "number" });
-console.log('Resultado:', arr6 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
-
-console.log('Caso 7: [10, 20, 30] con validador personalizado (números > 5)');
-const validadorMayor5 = (num) => num > 5;
-const arr7 = Validaciones.isValidArray([10, 20, 30], { validadorElemento: validadorMayor5 });
-console.log('Resultado:', arr7 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
-
-console.log('Caso 8: ["a", "b", "c"] con { noVacio: true, tipoElemento: "string" }');
-const arr8 = Validaciones.isValidArray(["a", "b", "c"], { noVacio: true, tipoElemento: "string" });
-console.log('Resultado:', arr8 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 3: 999999');
+const id3 = Validaciones.isValidId(999999);
+console.log('Resultado:', id3 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
 // =============================================
-// ARRAYS INVÁLIDOS
+// IDs VÁLIDOS (CON OPCIONES)
 // =============================================
-console.log('❌ ARRAYS INVÁLIDOS:');
+console.log('🆔 IDs VÁLIDOS (con opciones):');
 
-console.log('Caso 9: "no es array" (string)');
-const arr9 = Validaciones.isValidArray("no es array");
-console.log('Resultado:', arr9 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 4: "123" con { permitirString: true }');
+const id4 = Validaciones.isValidId("123", { permitirString: true });
+console.log('Resultado:', id4 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 10: null');
-const arr10 = Validaciones.isValidArray(null);
-console.log('Resultado:', arr10 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 5: 50 con { min: 10, max: 100 }');
+const id5 = Validaciones.isValidId(50, { min: 10, max: 100 });
+console.log('Resultado:', id5 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 11: undefined');
-const arr11 = Validaciones.isValidArray(undefined);
-console.log('Resultado:', arr11 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 6: 10 con { min: 10, max: 100 }');
+const id6 = Validaciones.isValidId(10, { min: 10, max: 100 });
+console.log('Resultado:', id6 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 12: {} (objeto)');
-const arr12 = Validaciones.isValidArray({});
-console.log('Resultado:', arr12 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 7: 100 con { min: 10, max: 100 }');
+const id7 = Validaciones.isValidId(100, { min: 10, max: 100 });
+console.log('Resultado:', id7 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 13: [] con { noVacio: true }');
-const arr13 = Validaciones.isValidArray([], { noVacio: true });
-console.log('Resultado:', arr13 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 8: "1" con { permitirString: true, min: 1, max: 100 }');
+const id8 = Validaciones.isValidId("1", { permitirString: true, min: 1, max: 100 });
+console.log('Resultado:', id8 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 14: ["a", "b", 1] con { tipoElemento: "string" }');
-const arr14 = Validaciones.isValidArray(["a", "b", 1], { tipoElemento: "string" });
-console.log('Resultado:', arr14 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// =============================================
+// IDs INVÁLIDOS
+// =============================================
+console.log('❌ IDs INVÁLIDOS:');
+
+console.log('Caso 9: 0 (debe ser >= 1)');
+const id9 = Validaciones.isValidId(0);
+console.log('Resultado:', id9 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 15: [1, 2, 3] con validador personalizado (números pares)');
-const validadorPar = (num) => num % 2 === 0;
-const arr15 = Validaciones.isValidArray([1, 2, 3], { validadorElemento: validadorPar });
-console.log('Resultado:', arr15 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 10: -5 (negativo)');
+const id10 = Validaciones.isValidId(-5);
+console.log('Resultado:', id10 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('----------------------------------------');
+
+console.log('Caso 11: 1.5 (decimal)');
+const id11 = Validaciones.isValidId(1.5);
+console.log('Resultado:', id11 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('----------------------------------------');
+
+console.log('Caso 12: 1000000 (excede max por defecto)');
+const id12 = Validaciones.isValidId(1000000);
+console.log('Resultado:', id12 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('----------------------------------------');
+
+console.log('Caso 13: null');
+const id13 = Validaciones.isValidId(null);
+console.log('Resultado:', id13 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('----------------------------------------');
+
+console.log('Caso 14: undefined');
+const id14 = Validaciones.isValidId(undefined);
+console.log('Resultado:', id14 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('----------------------------------------');
+
+console.log('Caso 15: "abc" (string sin permitir)');
+const id15 = Validaciones.isValidId("abc");
+console.log('Resultado:', id15 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('----------------------------------------');
+
+console.log('Caso 16: "abc" con { permitirString: true } (contiene letras)');
+const id16 = Validaciones.isValidId("abc", { permitirString: true });
+console.log('Resultado:', id16 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('----------------------------------------');
+
+console.log('Caso 17: "12a3" con { permitirString: true } (contiene letras)');
+const id17 = Validaciones.isValidId("12a3", { permitirString: true });
+console.log('Resultado:', id17 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('----------------------------------------');
+
+console.log('Caso 18: 150 con { max: 100 }');
+const id18 = Validaciones.isValidId(150, { max: 100 });
+console.log('Resultado:', id18 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('----------------------------------------');
+
+console.log('Caso 19: 5 con { min: 10, max: 100 }');
+const id19 = Validaciones.isValidId(5, { min: 10, max: 100 });
+console.log('Resultado:', id19 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
