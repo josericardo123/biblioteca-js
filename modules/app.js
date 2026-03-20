@@ -273,106 +273,201 @@
 // console.log('Resultado:', fecha14 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 // console.log('----------------------------------------');
 
-// modules/app.js - Añadir después de las pruebas de fecha
+// console.log('%c🔢 Probando isValidNumber:', 'color: blue; font-size: 14px; font-weight: bold;');
+// console.log('----------------------------------------');
 
-console.log('%c🔢 Probando isValidNumber:', 'color: blue; font-size: 14px; font-weight: bold;');
+// // =============================================
+// // NÚMEROS VÁLIDOS (SIN OPCIONES)
+// // =============================================
+// console.log('🔢 NÚMEROS VÁLIDOS (sin opciones):');
+// console.log('Caso 1: 42');
+// const num1 = Validaciones.isValidNumber(42);
+// console.log('Resultado:', num1 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 2: -10');
+// const num2 = Validaciones.isValidNumber(-10);
+// console.log('Resultado:', num2 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 3: 3.1416');
+// const num3 = Validaciones.isValidNumber(3.1416);
+// console.log('Resultado:', num3 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 4: 0');
+// const num4 = Validaciones.isValidNumber(0);
+// console.log('Resultado:', num4 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// // =============================================
+// // NÚMEROS VÁLIDOS (CON OPCIONES)
+// // =============================================
+// console.log('🔢 NÚMEROS VÁLIDOS (con opciones):');
+
+// console.log('Caso 5: 25 con { min: 0, max: 100 }');
+// const num5 = Validaciones.isValidNumber(25, { min: 0, max: 100 });
+// console.log('Resultado:', num5 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 6: 7 con { entero: true }');
+// const num6 = Validaciones.isValidNumber(7, { entero: true });
+// console.log('Resultado:', num6 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 7: 15 con { positivo: true }');
+// const num7 = Validaciones.isValidNumber(15, { positivo: true });
+// console.log('Resultado:', num7 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 8: 50 con { min: 10, max: 100, entero: true, positivo: true }');
+// const num8 = Validaciones.isValidNumber(50, { min: 10, max: 100, entero: true, positivo: true });
+// console.log('Resultado:', num8 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// // =============================================
+// // NÚMEROS INVÁLIDOS
+// // =============================================
+// console.log('❌ NÚMEROS INVÁLIDOS:');
+
+// console.log('Caso 9: "42" (string)');
+// const num9 = Validaciones.isValidNumber("42");
+// console.log('Resultado:', num9 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 10: null');
+// const num10 = Validaciones.isValidNumber(null);
+// console.log('Resultado:', num10 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 11: NaN');
+// const num11 = Validaciones.isValidNumber(NaN);
+// console.log('Resultado:', num11 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 12: Infinity');
+// const num12 = Validaciones.isValidNumber(Infinity);
+// console.log('Resultado:', num12 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 13: 200 con { max: 100 }');
+// const num13 = Validaciones.isValidNumber(200, { max: 100 });
+// console.log('Resultado:', num13 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 14: -5 con { min: 0 }');
+// const num14 = Validaciones.isValidNumber(-5, { min: 0 });
+// console.log('Resultado:', num14 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 15: 3.14 con { entero: true }');
+// const num15 = Validaciones.isValidNumber(3.14, { entero: true });
+// console.log('Resultado:', num15 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 16: -10 con { positivo: true }');
+// const num16 = Validaciones.isValidNumber(-10, { positivo: true });
+// console.log('Resultado:', num16 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// console.log('Caso 17: 0 con { positivo: true }');
+// const num17 = Validaciones.isValidNumber(0, { positivo: true });
+// console.log('Resultado:', num17 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
+
+// modules/app.js - Añadir después de las pruebas de número
+
+console.log('%c📦 Probando isValidArray:', 'color: purple; font-size: 14px; font-weight: bold;');
 console.log('----------------------------------------');
 
 // =============================================
-// NÚMEROS VÁLIDOS (SIN OPCIONES)
+// ARRAYS VÁLIDOS (SIN OPCIONES)
 // =============================================
-console.log('🔢 NÚMEROS VÁLIDOS (sin opciones):');
-console.log('Caso 1: 42');
-const num1 = Validaciones.isValidNumber(42);
-console.log('Resultado:', num1 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('📦 ARRAYS VÁLIDOS (sin opciones):');
+
+console.log('Caso 1: [] (array vacío)');
+const arr1 = Validaciones.isValidArray([]);
+console.log('Resultado:', arr1 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 2: -10');
-const num2 = Validaciones.isValidNumber(-10);
-console.log('Resultado:', num2 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 2: [1, 2, 3]');
+const arr2 = Validaciones.isValidArray([1, 2, 3]);
+console.log('Resultado:', arr2 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 3: 3.1416');
-const num3 = Validaciones.isValidNumber(3.1416);
-console.log('Resultado:', num3 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
-
-console.log('Caso 4: 0');
-const num4 = Validaciones.isValidNumber(0);
-console.log('Resultado:', num4 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 3: ["a", "b", "c"]');
+const arr3 = Validaciones.isValidArray(["a", "b", "c"]);
+console.log('Resultado:', arr3 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
 // =============================================
-// NÚMEROS VÁLIDOS (CON OPCIONES)
+// ARRAYS VÁLIDOS (CON OPCIONES)
 // =============================================
-console.log('🔢 NÚMEROS VÁLIDOS (con opciones):');
+console.log('📦 ARRAYS VÁLIDOS (con opciones):');
 
-console.log('Caso 5: 25 con { min: 0, max: 100 }');
-const num5 = Validaciones.isValidNumber(25, { min: 0, max: 100 });
-console.log('Resultado:', num5 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 4: [1, 2, 3] con { noVacio: true }');
+const arr4 = Validaciones.isValidArray([1, 2, 3], { noVacio: true });
+console.log('Resultado:', arr4 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 6: 7 con { entero: true }');
-const num6 = Validaciones.isValidNumber(7, { entero: true });
-console.log('Resultado:', num6 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 5: ["libro1", "libro2"] con { tipoElemento: "string" }');
+const arr5 = Validaciones.isValidArray(["libro1", "libro2"], { tipoElemento: "string" });
+console.log('Resultado:', arr5 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 7: 15 con { positivo: true }');
-const num7 = Validaciones.isValidNumber(15, { positivo: true });
-console.log('Resultado:', num7 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 6: [1, 2, 3] con { tipoElemento: "number" }');
+const arr6 = Validaciones.isValidArray([1, 2, 3], { tipoElemento: "number" });
+console.log('Resultado:', arr6 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 8: 50 con { min: 10, max: 100, entero: true, positivo: true }');
-const num8 = Validaciones.isValidNumber(50, { min: 10, max: 100, entero: true, positivo: true });
-console.log('Resultado:', num8 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 7: [10, 20, 30] con validador personalizado (números > 5)');
+const validadorMayor5 = (num) => num > 5;
+const arr7 = Validaciones.isValidArray([10, 20, 30], { validadorElemento: validadorMayor5 });
+console.log('Resultado:', arr7 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('----------------------------------------');
+
+console.log('Caso 8: ["a", "b", "c"] con { noVacio: true, tipoElemento: "string" }');
+const arr8 = Validaciones.isValidArray(["a", "b", "c"], { noVacio: true, tipoElemento: "string" });
+console.log('Resultado:', arr8 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
 // =============================================
-// NÚMEROS INVÁLIDOS
+// ARRAYS INVÁLIDOS
 // =============================================
-console.log('❌ NÚMEROS INVÁLIDOS:');
+console.log('❌ ARRAYS INVÁLIDOS:');
 
-console.log('Caso 9: "42" (string)');
-const num9 = Validaciones.isValidNumber("42");
-console.log('Resultado:', num9 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 9: "no es array" (string)');
+const arr9 = Validaciones.isValidArray("no es array");
+console.log('Resultado:', arr9 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
 console.log('Caso 10: null');
-const num10 = Validaciones.isValidNumber(null);
-console.log('Resultado:', num10 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+const arr10 = Validaciones.isValidArray(null);
+console.log('Resultado:', arr10 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 11: NaN');
-const num11 = Validaciones.isValidNumber(NaN);
-console.log('Resultado:', num11 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 11: undefined');
+const arr11 = Validaciones.isValidArray(undefined);
+console.log('Resultado:', arr11 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 12: Infinity');
-const num12 = Validaciones.isValidNumber(Infinity);
-console.log('Resultado:', num12 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 12: {} (objeto)');
+const arr12 = Validaciones.isValidArray({});
+console.log('Resultado:', arr12 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 13: 200 con { max: 100 }');
-const num13 = Validaciones.isValidNumber(200, { max: 100 });
-console.log('Resultado:', num13 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 13: [] con { noVacio: true }');
+const arr13 = Validaciones.isValidArray([], { noVacio: true });
+console.log('Resultado:', arr13 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 14: -5 con { min: 0 }');
-const num14 = Validaciones.isValidNumber(-5, { min: 0 });
-console.log('Resultado:', num14 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 14: ["a", "b", 1] con { tipoElemento: "string" }');
+const arr14 = Validaciones.isValidArray(["a", "b", 1], { tipoElemento: "string" });
+console.log('Resultado:', arr14 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');
 
-console.log('Caso 15: 3.14 con { entero: true }');
-const num15 = Validaciones.isValidNumber(3.14, { entero: true });
-console.log('Resultado:', num15 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
-
-console.log('Caso 16: -10 con { positivo: true }');
-const num16 = Validaciones.isValidNumber(-10, { positivo: true });
-console.log('Resultado:', num16 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
-
-console.log('Caso 17: 0 con { positivo: true }');
-const num17 = Validaciones.isValidNumber(0, { positivo: true });
-console.log('Resultado:', num17 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+console.log('Caso 15: [1, 2, 3] con validador personalizado (números pares)');
+const validadorPar = (num) => num % 2 === 0;
+const arr15 = Validaciones.isValidArray([1, 2, 3], { validadorElemento: validadorPar });
+console.log('Resultado:', arr15 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
 console.log('----------------------------------------');

@@ -432,7 +432,7 @@ export const Validaciones = {
     /**
      * Valida que un valor sea un número válido dentro de un rango
      * @param {*} valor - El valor a validar
-     * @param {Object} opciones - Opciones de validación 
+     * @param {Object} opciones - Opciones de validación
      * @param {number} opciones.min - Valor mínimo permitido (por defecto: -Infinity)
      * @param {number} opciones.max - Valor máximo permitido (por defecto: -Infinity)
      * @param {boolean} opciones.entero - Si true, solo acepta números enteros (por defecto: -false)
@@ -444,53 +444,130 @@ export const Validaciones = {
             min = -Infinity,
             max = Infinity,
             entero = false,
-            positivo = false
+            positivo = false,
         } = opciones;
-        
+
         // Paso 1: Verificar que existe
-        if(valor === undefined || valor === null) {
-            console.error(`❌ isValidNumber: El valor no puede ser null o undefined`);
+        if (valor === undefined || valor === null) {
+            console.error(
+                `❌ isValidNumber: El valor no puede ser null o undefined`,
+            );
             return false;
         }
 
         // Paso 2: Verificar que es un nùmero
-        if(typeof valor !== 'number') {
-            console.error(`❌ isValidNumber: Se esperaba un número, se recibió ${typeof valor}`);
+        if (typeof valor !== "number") {
+            console.error(
+                `❌ isValidNumber: Se esperaba un número, se recibió ${typeof valor}`,
+            );
             return false;
         }
 
         // Paso 3: Verificar que no sea NaN o Infinity
-        if(isNaN(valor) || !isFinite(valor)) {
-            console.error(`❌ isValidNumber: El valor no es un número válido (NaN o Infinity)`);
+        if (isNaN(valor) || !isFinite(valor)) {
+            console.error(
+                `❌ isValidNumber: El valor no es un número válido (NaN o Infinity)`,
+            );
             return false;
         }
 
         // Paso 4: Verificar que sea entero si se requiere
-        if(entero && !Number.isInteger(valor)) {
-            console.error(`❌ isValidNumber: Se esperaba un número entero, se recibió ${valor}`);
+        if (entero && !Number.isInteger(valor)) {
+            console.error(
+                `❌ isValidNumber: Se esperaba un número entero, se recibió ${valor}`,
+            );
             return false;
         }
 
         // Paso 5: Verificar que sea positivo si requiere
-        if(positivo && valor <= 0) {
-            console.error(`❌ isValidNumber: Se esperaba un número positivo, se recibió ${valor}`);
+        if (positivo && valor <= 0) {
+            console.error(
+                `❌ isValidNumber: Se esperaba un número positivo, se recibió ${valor}`,
+            );
             return false;
         }
 
         // Paso 6: Verificar rango mínimo
-        if(valor < min) {
-            console.error(`❌ isValidNumber: El valor debe ser mayor o igual a ${min} (recibido ${valor})`);
+        if (valor < min) {
+            console.error(
+                `❌ isValidNumber: El valor debe ser mayor o igual a ${min} (recibido ${valor})`,
+            );
             return false;
         }
 
         // Paso 7: Verificar rango máximo
-        if(valor > max) {
-            console.error(`❌ isValidNumber: El valor debe ser menor o igual a ${max} (recibido ${valor})`);
+        if (valor > max) {
+            console.error(
+                `❌ isValidNumber: El valor debe ser menor o igual a ${max} (recibido ${valor})`,
+            );
             return false;
         }
 
         // Paso 8: Si pasa todas las validaciones
         console.log(`✅ isValidNumber: ${valor} es válido`);
+        return true;
+    },
+
+    /**
+     * Valida que un valor sea un array válido
+     * @param {*} valor - El valor a validar
+     * @param {Object} opciones - Opciones de validación
+     * @param {boolean} opciones.noVacio - Si true, el array no puede estar vacío (por defecto: false)
+     * @param {string} opciones.tipoElemento - Tipo esperado para cada elemento ('string', 'number', 'etc.')
+     * @param {Function} opciones.validadorElemento - Función de validación personalizada para cada elemento
+     * @returns {boolean} - true si es válido
+     */
+
+    isValidArray(valor, opciones = {}) {
+        // Valores por defecto
+        const {
+            noVacio = false,
+            tipoElemento = null,
+            validadorElemento = null
+        } = opciones;
+
+        // Paso 1: Verificar que existe
+        if(valor === undefined || valor === null) {
+            console.error(`❌ isValidArray: El valor no puede ser null o undefined`);
+            return false;
+        }
+
+        // Paso 2: Verificar que es un Array
+        if(!Array.isArray(valor)) {
+            console.error(`❌ isValidArray: Se esperaba un array, se recibió ${typeof valor}`);
+            return false;
+        }
+
+        // Paso 3: Verificar que no este vacío si se requiere
+        if(noVacio && valor.length === 0) {
+            console.error(`❌ isValidArray: El array no puede estar vacío`);
+            return false;
+        }
+
+        // Paso 4: Validar elementos si se específico tipo
+        if(tipoElemento) {
+            for(let i = 0; i < valor.length; i++) {
+                const elemento = valor[i];
+                const tipoElementoReal = typeof elemento;
+                if(tipoElementoReal !== tipoElemento) {
+                    console.error(`❌ isValidArray: Elemento en posición ${i} debe ser ${tipoElemento}, es ${tipoElementoReal}`);
+                    return false;
+                }
+            }
+        }
+
+        // Paso 5: Validar elementos con validador personalizado
+        if(validadorElemento && typeof validadorElemento === 'function') {
+            for(let i = 0; i < valor.length; i++) {
+                if(!validadorElemento(valor[i])) {
+                    console.error(`❌ isValidArray: Elemento en posición ${i} no pasa la validación personalizada`);
+                    return false;
+                }
+            }
+        }
+
+        // Paso 6: Si pasa todas las validaciones
+        console.log(`✅ isValidArray: Array de ${valor.length} elemento(s) es válido`);
         return true;
     }
 };
