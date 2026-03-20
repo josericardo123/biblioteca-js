@@ -38,7 +38,7 @@ Sistema de gestión de biblioteca desarrollado con **JavaScript puro** como part
 - [x] `isValidDate` - Validación de fechas
 - [x] `isValidNumber` - Validación de números
 - [x] `isValidArray` - Validación de arrays
-- [ ] `isValidId` - Validación de IDs
+- [x] `isValidId` - Validación de IDs
 
 ### Fase 2 - Módulo de Libros (Próximamente)
 - [ ] CRUD completo de libros
@@ -94,10 +94,11 @@ Sprint Actual: Sprint 1 - Módulo de Validaciones
 - VAL-04: isValidISBN ✅ (Tarea 6)
 - VAL-05: isValidDate ✅ (Tarea 7)
 - VAL-06: isValidNumber ✅ (Tarea 8)
-- VAL-07: isValidArray ✅ (Tarea 9 - Recién terninado)
+- VAL-07: isValidArray ✅ (Tarea 9)
+- VAL-08: isValidId ✅ (Tarea 10 - Recién terminado)
 
 ⏳ Pendientes:
-- VAL-08: isValidId
+
 
 📈 Progreso: 7/8 tareas completadas (87.5%)
 
