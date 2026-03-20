@@ -359,59 +359,138 @@ export const Validaciones = {
      */
     isValidDate(fechaStr, permitirPasado = false) {
         // Paso 1: Verficar que existe y es string
-        if(!this.isValidString(fechaStr, 10, 10)) {
-            console.error(`❌ isValidDate: La fecha debe ser un string de 10 caracteres`);
+        if (!this.isValidString(fechaStr, 10, 10)) {
+            console.error(
+                `❌ isValidDate: La fecha debe ser un string de 10 caracteres`,
+            );
             return false;
         }
 
         // Paso 2: Vefiricar formato con regex (YYYY-MM-DD)
         const formatoRegex = /^\d{4}-\d{2}-\d{2}$/;
-        if(!formatoRegex.test(fechaStr)) {
-            console.error(`❌ isValidDate: Formato inválido, Use YYYY-MM-DD (ej: 2024-12-31)`);
+        if (!formatoRegex.test(fechaStr)) {
+            console.error(
+                `❌ isValidDate: Formato inválido, Use YYYY-MM-DD (ej: 2024-12-31)`,
+            );
             return false;
         }
 
         // Paso 3: Crear objeto Date
-        const [anio, mes, dia] = fechaStr.split('-').map(Number);
+        const [anio, mes, dia] = fechaStr.split("-").map(Number);
         const fecha = new Date(Date.UTC(anio, mes - 1, dia));
 
         // Paso 4: Verificar que la fecha sea válida
-        if(isNaN(fecha.getTime())) {
-            console.error(`❌ isValidDate: La fecha no existe (ej: 2024-02-30 no es válido)`);
+        if (isNaN(fecha.getTime())) {
+            console.error(
+                `❌ isValidDate: La fecha no existe (ej: 2024-02-30 no es válido)`,
+            );
             return false;
         }
 
         // Paso 5: Verificar que los componentes coinciden (para detectar desbordamiento)
-        if(fecha.getUTCFullYear() !== anio ||
+        if (
+            fecha.getUTCFullYear() !== anio ||
             fecha.getUTCMonth() + 1 !== mes ||
-            fecha.getUTCDate() !== dia) {
-                console.error(`❌ isValidDate: La fecha no es coherente (ej: 2024-02-29 solo en bisiesto)`);
-                return false;
+            fecha.getUTCDate() !== dia
+        ) {
+            console.error(
+                `❌ isValidDate: La fecha no es coherente (ej: 2024-02-29 solo en bisiesto)`,
+            );
+            return false;
         }
 
         // Paso 6: Verificar rango razonable (1900 - 2100)
-        if(anio < 1900 || anio > 2100) {
-            console.error(`❌ isValidDate: El año debe estar entre 1900 y 2100`);
+        if (anio < 1900 || anio > 2100) {
+            console.error(
+                `❌ isValidDate: El año debe estar entre 1900 y 2100`,
+            );
             return false;
         }
 
         // Paso 7: Verificar que no sea fecha pasada (si no se permite)
-        if(!permitirPasado) {
+        if (!permitirPasado) {
             const hoy = new Date();
-            const hoyUTC = Date.UTC(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+            const hoyUTC = Date.UTC(
+                hoy.getFullYear(),
+                hoy.getMonth(),
+                hoy.getDate(),
+            );
 
-            if(fecha < hoyUTC) {
+            if (fecha < hoyUTC) {
                 console.error(
-                    `❌ isValidDate: La fecha no puede ser en el pasado`
+                    `❌ isValidDate: La fecha no puede ser en el pasado`,
                 );
                 return false;
             }
         }
 
         // Paso 8: Si pasa todas las validaciones
-        console.log(
-            `✅ isValidDate: "${fechaStr}" es válido`
-        );
+        console.log(`✅ isValidDate: "${fechaStr}" es válido`);
+        return true;
+    },
+
+    /**
+     * Valida que un valor sea un número válido dentro de un rango
+     * @param {*} valor - El valor a validar
+     * @param {Object} opciones - Opciones de validación 
+     * @param {number} opciones.min - Valor mínimo permitido (por defecto: -Infinity)
+     * @param {number} opciones.max - Valor máximo permitido (por defecto: -Infinity)
+     * @param {boolean} opciones.entero - Si true, solo acepta números enteros (por defecto: -false)
+     * @param {boolean} opciones.positivo - Si true, solo acepta números positivos (por defecto: -false)
+     * @returns {boolean} - true si es válido
+     */
+    isValidNumber(valor, opciones = {}) {
+        const {
+            min = -Infinity,
+            max = Infinity,
+            entero = false,
+            positivo = false
+        } = opciones;
+        
+        // Paso 1: Verificar que existe
+        if(valor === undefined || valor === null) {
+            console.error(`❌ isValidNumber: El valor no puede ser null o undefined`);
+            return false;
+        }
+
+        // Paso 2: Verificar que es un nùmero
+        if(typeof valor !== 'number') {
+            console.error(`❌ isValidNumber: Se esperaba un número, se recibió ${typeof valor}`);
+            return false;
+        }
+
+        // Paso 3: Verificar que no sea NaN o Infinity
+        if(isNaN(valor) || !isFinite(valor)) {
+            console.error(`❌ isValidNumber: El valor no es un número válido (NaN o Infinity)`);
+            return false;
+        }
+
+        // Paso 4: Verificar que sea entero si se requiere
+        if(entero && !Number.isInteger(valor)) {
+            console.error(`❌ isValidNumber: Se esperaba un número entero, se recibió ${valor}`);
+            return false;
+        }
+
+        // Paso 5: Verificar que sea positivo si requiere
+        if(positivo && valor <= 0) {
+            console.error(`❌ isValidNumber: Se esperaba un número positivo, se recibió ${valor}`);
+            return false;
+        }
+
+        // Paso 6: Verificar rango mínimo
+        if(valor < min) {
+            console.error(`❌ isValidNumber: El valor debe ser mayor o igual a ${min} (recibido ${valor})`);
+            return false;
+        }
+
+        // Paso 7: Verificar rango máximo
+        if(valor > max) {
+            console.error(`❌ isValidNumber: El valor debe ser menor o igual a ${max} (recibido ${valor})`);
+            return false;
+        }
+
+        // Paso 8: Si pasa todas las validaciones
+        console.log(`✅ isValidNumber: ${valor} es válido`);
         return true;
     }
 };
