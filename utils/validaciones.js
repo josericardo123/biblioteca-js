@@ -176,7 +176,7 @@ export const Validaciones = {
      * @private
      */
     _limpiarISBN(isbn) {
-        return isbn.replace(/[-\s]/g, '');
+        return isbn.replace(/[-\s]/g, "");
     },
 
     /**
@@ -186,23 +186,25 @@ export const Validaciones = {
      * @private
      */
     _validarISBN10(isbn) {
-        console.log('🔍 Validando ISBN-10:', isbn);
-        
+        console.log("🔍 Validando ISBN-10:", isbn);
+
         // Paso 1: verificar longitud
         if (isbn.length !== 10) {
-            console.log('   ❌ Longitud incorrecta:', isbn.length);
+            console.log("   ❌ Longitud incorrecta:", isbn.length);
             return false;
         }
 
         // Paso 2: Calcular suma de verificación
         let suma = 0;
-        console.log('   Calculando suma:');
-        
+        console.log("   Calculando suma:");
+
         for (let i = 0; i < 9; i++) {
             const digito = parseInt(isbn[i], 10);
-            console.log(`   Posición ${i+1}: dígito ${isbn[i]} × ${10 - i} = ${digito * (10 - i)}`);
+            console.log(
+                `   Posición ${i + 1}: dígito ${isbn[i]} × ${10 - i} = ${digito * (10 - i)}`,
+            );
             if (isNaN(digito)) {
-                console.log('   ❌ No es dígito');
+                console.log("   ❌ No es dígito");
                 return false;
             }
             suma += digito * (10 - i);
@@ -213,15 +215,15 @@ export const Validaciones = {
         let ultimoValor;
 
         console.log(`   Último carácter: "${ultimo}"`);
-        
+
         if (ultimo === "X") {
             ultimoValor = 10;
-            console.log('   → Valor: 10 (X)');
+            console.log("   → Valor: 10 (X)");
         } else {
             ultimoValor = parseInt(ultimo, 10);
             console.log(`   → Valor: ${ultimoValor}`);
             if (isNaN(ultimoValor)) {
-                console.log('   ❌ Último carácter inválido');
+                console.log("   ❌ Último carácter inválido");
                 return false;
             }
         }
@@ -229,8 +231,10 @@ export const Validaciones = {
         // Paso 4: Verificar suma
         suma += ultimoValor;
         console.log(`   Suma total: ${suma}`);
-        console.log(`   ${suma} ÷ 11 = ${Math.floor(suma/11)} residuo ${suma % 11}`);
-        
+        console.log(
+            `   ${suma} ÷ 11 = ${Math.floor(suma / 11)} residuo ${suma % 11}`,
+        );
+
         return suma % 11 === 0;
     },
 
@@ -241,58 +245,62 @@ export const Validaciones = {
      * @private
      */
     _validarISBN13(isbn) {
-        console.log('🔍 Validando ISBN-13:', isbn);
-        
+        console.log("🔍 Validando ISBN-13:", isbn);
+
         // Paso 1: Verificar longitud
         if (isbn.length !== 13) {
-            console.log('   ❌ Longitud incorrecta:', isbn.length);
+            console.log("   ❌ Longitud incorrecta:", isbn.length);
             return false;
         }
 
         // Paso 2: Verificar prefijo
         const prefijo = isbn.substring(0, 3);
-        console.log('   Prefijo:', prefijo);
-        
+        console.log("   Prefijo:", prefijo);
+
         if (prefijo !== "978" && prefijo !== "979") {
-            console.log('   ❌ Prefijo inválido');
+            console.log("   ❌ Prefijo inválido");
             return false;
         }
 
         // Paso 3: Calcular suma
         let suma = 0;
-        console.log('   Calculando suma:');
-        
+        console.log("   Calculando suma:");
+
         for (let i = 0; i < 12; i++) {
             const digito = parseInt(isbn[i], 10);
             const multiplicador = (i + 1) % 2 === 0 ? 3 : 1;
             const producto = digito * multiplicador;
-            
-            console.log(`   Posición ${i+1}: dígito ${isbn[i]} × ${multiplicador} = ${producto}`);
-            
+
+            console.log(
+                `   Posición ${i + 1}: dígito ${isbn[i]} × ${multiplicador} = ${producto}`,
+            );
+
             if (isNaN(digito)) {
-                console.log('   ❌ No es dígito');
+                console.log("   ❌ No es dígito");
                 return false;
             }
-            
+
             suma += producto;
         }
 
         // Paso 4: Calcular dígito de control
         const digitoControl = parseInt(isbn[12], 10);
         console.log(`   Dígito control proporcionado: ${digitoControl}`);
-        
+
         if (isNaN(digitoControl)) {
-            console.log('   ❌ Dígito control inválido');
+            console.log("   ❌ Dígito control inválido");
             return false;
         }
 
         const resto = suma % 10;
         const digitoEsperado = resto === 0 ? 0 : 10 - resto;
-        
+
         console.log(`   Suma total: ${suma}`);
         console.log(`   Resto: ${resto}`);
         console.log(`   Dígito esperado: ${digitoEsperado}`);
-        console.log(`   ${digitoControl} === ${digitoEsperado}? ${digitoControl === digitoEsperado ? '✅' : '❌'}`);
+        console.log(
+            `   ${digitoControl} === ${digitoEsperado}? ${digitoControl === digitoEsperado ? "✅" : "❌"}`,
+        );
 
         return digitoControl === digitoEsperado;
     },
@@ -342,4 +350,68 @@ export const Validaciones = {
 
         return esValido;
     },
+
+    /**
+     * Valida que un string sea una fecha válida en formato YYYY-MM-DD
+     * @param {string} fechaStr - Fecha a validar (formato YYYY-MM-DD)
+     * @param {boolean} permitirPasado - Si true, permite fechas pasadas (por defecto false)
+     *  @returns {boolean} - true si es válida
+     */
+    isValidDate(fechaStr, permitirPasado = false) {
+        // Paso 1: Verficar que existe y es string
+        if(!this.isValidString(fechaStr, 10, 10)) {
+            console.error(`❌ isValidDate: La fecha debe ser un string de 10 caracteres`);
+            return false;
+        }
+
+        // Paso 2: Vefiricar formato con regex (YYYY-MM-DD)
+        const formatoRegex = /^\d{4}-\d{2}-\d{2}$/;
+        if(!formatoRegex.test(fechaStr)) {
+            console.error(`❌ isValidDate: Formato inválido, Use YYYY-MM-DD (ej: 2024-12-31)`);
+            return false;
+        }
+
+        // Paso 3: Crear objeto Date
+        const [anio, mes, dia] = fechaStr.split('-').map(Number);
+        const fecha = new Date(Date.UTC(anio, mes - 1, dia));
+
+        // Paso 4: Verificar que la fecha sea válida
+        if(isNaN(fecha.getTime())) {
+            console.error(`❌ isValidDate: La fecha no existe (ej: 2024-02-30 no es válido)`);
+            return false;
+        }
+
+        // Paso 5: Verificar que los componentes coinciden (para detectar desbordamiento)
+        if(fecha.getUTCFullYear() !== anio ||
+            fecha.getUTCMonth() + 1 !== mes ||
+            fecha.getUTCDate() !== dia) {
+                console.error(`❌ isValidDate: La fecha no es coherente (ej: 2024-02-29 solo en bisiesto)`);
+                return false;
+        }
+
+        // Paso 6: Verificar rango razonable (1900 - 2100)
+        if(anio < 1900 || anio > 2100) {
+            console.error(`❌ isValidDate: El año debe estar entre 1900 y 2100`);
+            return false;
+        }
+
+        // Paso 7: Verificar que no sea fecha pasada (si no se permite)
+        if(!permitirPasado) {
+            const hoy = new Date();
+            const hoyUTC = Date.UTC(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+
+            if(fecha < hoyUTC) {
+                console.error(
+                    `❌ isValidDate: La fecha no puede ser en el pasado`
+                );
+                return false;
+            }
+        }
+
+        // Paso 8: Si pasa todas las validaciones
+        console.log(
+            `✅ isValidDate: "${fechaStr}" es válido`
+        );
+        return true;
+    }
 };
