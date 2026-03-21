@@ -100,7 +100,7 @@ Sprint Actual: Sprint 1 - Módulo de Validaciones
 ⏳ Pendientes:
 
 
-📈 Progreso: 7/8 tareas completadas (87.5%)
+📈 Progreso: 8/8 tareas completadas (100%)
 
 🤝 Contribuciones
 Este es un proyecto personal de aprendizaje, pero si tienes sugerencias o encuentras errores, siéntete libre de abrir un issue.
