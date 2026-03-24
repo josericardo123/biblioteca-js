@@ -1,10 +1,10 @@
-import { Validaciones } from '../utils/validaciones';
+import { Validaciones } from "./utils/validaciones.js";
 
 /**
  * Clase que representa un libros en el sistema
  */
 
-export class Libros {
+export class Libro {
     /**
      * Constructor de la clase libro
      * @param {Object} datos - Datos del libros
@@ -15,20 +15,26 @@ export class Libros {
      */
     constructor(datos) {
         // Validaciones en el constructor
-        if(!Validaciones.isValidString(datos.titulo, 1, 200)) {
-            throw new Error('Título inválido');
+        if (!Validaciones.isValidString(datos.titulo, 1, 200)) {
+            throw new Error("Título inválido");
         }
 
-        if(!Validaciones.isValidString(datos.autor, 1, 100)) {
-            throw new Error('Autor inválido');
+        if (!Validaciones.isValidString(datos.autor, 1, 100)) {
+            throw new Error("Autor inválido");
         }
 
-        if(!Validaciones.isValidISBN(datos.isbn)) {
-            throw new Error('ISBN inválido');
+        if (!Validaciones.isValidISBN(datos.isbn)) {
+            throw new Error("ISBN inválido");
         }
 
-        if(!Validaciones.isValidNumber(datos.anioPublicacion, {min: 1000, max: new Date().getFullYear(), entero: true})) {
-            throw new Error('Año de publicación inválido');
+        if (
+            !Validaciones.isValidNumber(datos.anioPublicacion, {
+                min: 1000,
+                max: new Date().getFullYear(),
+                entero: true,
+            })
+        ) {
+            throw new Error("Año de publicación inválido");
         }
 
         // Propiedades del libro
@@ -38,7 +44,7 @@ export class Libros {
         this.isbn = datos.isbn;
         this.anioPublicacion = datos.anioPublicacion;
         this.disponible = true;
-        this.fechaRegistro = new Date().toISOString().split('T')[0];
+        this.fechaRegistro = new Date().toISOString().split("T")[0];
     }
 
     /**
@@ -53,7 +59,7 @@ export class Libros {
             isbn: this.isbn,
             anioPublicacion: this.anioPublicacion,
             disponible: this.disponible,
-            fechaRegistro: this.fechaRegistro
+            fechaRegistro: this.fechaRegistro,
         };
     }
 
@@ -61,8 +67,8 @@ export class Libros {
      * Marca el libro como no disponible
      */
     prestar() {
-        if(!this.disponible) {
-            throw new Error('El libro ya está prestado');
+        if (!this.disponible) {
+            throw new Error("El libro ya está prestado");
         }
         this.disponible = false;
         console.log(`📖 Libro "${this.titulo}" prestado.`);
@@ -72,11 +78,11 @@ export class Libros {
      * Marca el libro como disponible
      */
     devolver() {
-        if(!this.disponible) {
-            throw new Error('El libro ya estpa disponible');
+        if (this.disponible) {
+            throw new Error("El libro ya está disponible");
         }
 
-        this.disponible = false;
+        this.disponible = true;
         console.log(`📖 Libro "${this.titulo}" devuelto`);
     }
 }

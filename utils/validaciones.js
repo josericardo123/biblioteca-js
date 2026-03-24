@@ -186,25 +186,25 @@ export const Validaciones = {
      * @private
      */
     _validarISBN10(isbn) {
-        console.log("🔍 Validando ISBN-10:", isbn);
+        // console.log("🔍 Validando ISBN-10:", isbn);
 
         // Paso 1: verificar longitud
         if (isbn.length !== 10) {
-            console.log("   ❌ Longitud incorrecta:", isbn.length);
+            // console.log("   ❌ Longitud incorrecta:", isbn.length);
             return false;
         }
 
         // Paso 2: Calcular suma de verificación
         let suma = 0;
-        console.log("   Calculando suma:");
+        // console.log("   Calculando suma:");
 
         for (let i = 0; i < 9; i++) {
             const digito = parseInt(isbn[i], 10);
-            console.log(
-                `   Posición ${i + 1}: dígito ${isbn[i]} × ${10 - i} = ${digito * (10 - i)}`,
-            );
+            // console.log(
+            //     `   Posición ${i + 1}: dígito ${isbn[i]} × ${10 - i} = ${digito * (10 - i)}`,
+            // );
             if (isNaN(digito)) {
-                console.log("   ❌ No es dígito");
+                // console.log("   ❌ No es dígito");
                 return false;
             }
             suma += digito * (10 - i);
@@ -214,26 +214,26 @@ export const Validaciones = {
         const ultimo = isbn[9].toUpperCase();
         let ultimoValor;
 
-        console.log(`   Último carácter: "${ultimo}"`);
+        // console.log(`   Último carácter: "${ultimo}"`);
 
         if (ultimo === "X") {
             ultimoValor = 10;
-            console.log("   → Valor: 10 (X)");
+            // console.log("   → Valor: 10 (X)");
         } else {
             ultimoValor = parseInt(ultimo, 10);
-            console.log(`   → Valor: ${ultimoValor}`);
+            // console.log(`   → Valor: ${ultimoValor}`);
             if (isNaN(ultimoValor)) {
-                console.log("   ❌ Último carácter inválido");
+                // console.log("   ❌ Último carácter inválido");
                 return false;
             }
         }
 
         // Paso 4: Verificar suma
         suma += ultimoValor;
-        console.log(`   Suma total: ${suma}`);
-        console.log(
-            `   ${suma} ÷ 11 = ${Math.floor(suma / 11)} residuo ${suma % 11}`,
-        );
+        // console.log(`   Suma total: ${suma}`);
+        // console.log(
+        //     `   ${suma} ÷ 11 = ${Math.floor(suma / 11)} residuo ${suma % 11}`,
+        // );
 
         return suma % 11 === 0;
     },
@@ -255,28 +255,28 @@ export const Validaciones = {
 
         // Paso 2: Verificar prefijo
         const prefijo = isbn.substring(0, 3);
-        console.log("   Prefijo:", prefijo);
+        // console.log("   Prefijo:", prefijo);
 
         if (prefijo !== "978" && prefijo !== "979") {
-            console.log("   ❌ Prefijo inválido");
+            // console.log("   ❌ Prefijo inválido");
             return false;
         }
 
         // Paso 3: Calcular suma
         let suma = 0;
-        console.log("   Calculando suma:");
+        // console.log("   Calculando suma:");
 
         for (let i = 0; i < 12; i++) {
             const digito = parseInt(isbn[i], 10);
             const multiplicador = (i + 1) % 2 === 0 ? 3 : 1;
             const producto = digito * multiplicador;
 
-            console.log(
-                `   Posición ${i + 1}: dígito ${isbn[i]} × ${multiplicador} = ${producto}`,
-            );
+            // console.log(
+            //     `   Posición ${i + 1}: dígito ${isbn[i]} × ${multiplicador} = ${producto}`,
+            // );
 
             if (isNaN(digito)) {
-                console.log("   ❌ No es dígito");
+                // console.log("   ❌ No es dígito");
                 return false;
             }
 
@@ -285,7 +285,7 @@ export const Validaciones = {
 
         // Paso 4: Calcular dígito de control
         const digitoControl = parseInt(isbn[12], 10);
-        console.log(`   Dígito control proporcionado: ${digitoControl}`);
+        // console.log(`   Dígito control proporcionado: ${digitoControl}`);
 
         if (isNaN(digitoControl)) {
             console.log("   ❌ Dígito control inválido");
@@ -295,12 +295,12 @@ export const Validaciones = {
         const resto = suma % 10;
         const digitoEsperado = resto === 0 ? 0 : 10 - resto;
 
-        console.log(`   Suma total: ${suma}`);
-        console.log(`   Resto: ${resto}`);
-        console.log(`   Dígito esperado: ${digitoEsperado}`);
-        console.log(
-            `   ${digitoControl} === ${digitoEsperado}? ${digitoControl === digitoEsperado ? "✅" : "❌"}`,
-        );
+        // console.log(`   Suma total: ${suma}`);
+        // console.log(`   Resto: ${resto}`);
+        // console.log(`   Dígito esperado: ${digitoEsperado}`);
+        // console.log(
+        //     `   ${digitoControl} === ${digitoEsperado}? ${digitoControl === digitoEsperado ? "✅" : "❌"}`,
+        // );
 
         return digitoControl === digitoEsperado;
     },
@@ -523,51 +523,61 @@ export const Validaciones = {
         const {
             noVacio = false,
             tipoElemento = null,
-            validadorElemento = null
+            validadorElemento = null,
         } = opciones;
 
         // Paso 1: Verificar que existe
-        if(valor === undefined || valor === null) {
-            console.error(`❌ isValidArray: El valor no puede ser null o undefined`);
+        if (valor === undefined || valor === null) {
+            console.error(
+                `❌ isValidArray: El valor no puede ser null o undefined`,
+            );
             return false;
         }
 
         // Paso 2: Verificar que es un Array
-        if(!Array.isArray(valor)) {
-            console.error(`❌ isValidArray: Se esperaba un array, se recibió ${typeof valor}`);
+        if (!Array.isArray(valor)) {
+            console.error(
+                `❌ isValidArray: Se esperaba un array, se recibió ${typeof valor}`,
+            );
             return false;
         }
 
         // Paso 3: Verificar que no este vacío si se requiere
-        if(noVacio && valor.length === 0) {
+        if (noVacio && valor.length === 0) {
             console.error(`❌ isValidArray: El array no puede estar vacío`);
             return false;
         }
 
         // Paso 4: Validar elementos si se específico tipo
-        if(tipoElemento) {
-            for(let i = 0; i < valor.length; i++) {
+        if (tipoElemento) {
+            for (let i = 0; i < valor.length; i++) {
                 const elemento = valor[i];
                 const tipoElementoReal = typeof elemento;
-                if(tipoElementoReal !== tipoElemento) {
-                    console.error(`❌ isValidArray: Elemento en posición ${i} debe ser ${tipoElemento}, es ${tipoElementoReal}`);
+                if (tipoElementoReal !== tipoElemento) {
+                    console.error(
+                        `❌ isValidArray: Elemento en posición ${i} debe ser ${tipoElemento}, es ${tipoElementoReal}`,
+                    );
                     return false;
                 }
             }
         }
 
         // Paso 5: Validar elementos con validador personalizado
-        if(validadorElemento && typeof validadorElemento === 'function') {
-            for(let i = 0; i < valor.length; i++) {
-                if(!validadorElemento(valor[i])) {
-                    console.error(`❌ isValidArray: Elemento en posición ${i} no pasa la validación personalizada`);
+        if (validadorElemento && typeof validadorElemento === "function") {
+            for (let i = 0; i < valor.length; i++) {
+                if (!validadorElemento(valor[i])) {
+                    console.error(
+                        `❌ isValidArray: Elemento en posición ${i} no pasa la validación personalizada`,
+                    );
                     return false;
                 }
             }
         }
 
         // Paso 6: Si pasa todas las validaciones
-        console.log(`✅ isValidArray: Array de ${valor.length} elemento(s) es válido`);
+        console.log(
+            `✅ isValidArray: Array de ${valor.length} elemento(s) es válido`,
+        );
         return true;
     },
 
@@ -582,14 +592,10 @@ export const Validaciones = {
      */
 
     isValidId(valor, opciones = {}) {
-        const {
-            permitirString = false,
-            min = 1,
-            max = 999999
-        } = opciones;
+        const { permitirString = false, min = 1, max = 999999 } = opciones;
 
         // Paso 1: Verificar que existe
-        if(valor === undefined || valor === null) {
+        if (valor === undefined || valor === null) {
             console.error(`❌ isValidId: El ID no puede ser null o undefined`);
             return false;
         }
@@ -598,15 +604,19 @@ export const Validaciones = {
         let idNumerico = valor;
         let esString = false;
 
-        if(typeof valor === 'string') {
-            if(!permitirString) {
-                console.error(`❌ isValidId: Se esperaba un número, se recibió string: ${valor}`);
+        if (typeof valor === "string") {
+            if (!permitirString) {
+                console.error(
+                    `❌ isValidId: Se esperaba un número, se recibió string: ${valor}`,
+                );
                 return false;
             }
 
             // Verificar que el string solo contenga dígitos
-            if(!/^\d+$/.test(valor)) {
-                console.error(`❌ isValidId: El string debe contener solo dígitos (recibio: "${valor}")`);
+            if (!/^\d+$/.test(valor)) {
+                console.error(
+                    `❌ isValidId: El string debe contener solo dígitos (recibio: "${valor}")`,
+                );
                 return false;
             }
 
@@ -615,32 +625,40 @@ export const Validaciones = {
         }
 
         // Paso 3: Verificar que sea un número
-        if(typeof idNumerico !== 'number') {
-            console.error(`❌ isValidId: Se esperaba un número, se recibio ${typeof valor}`);
+        if (typeof idNumerico !== "number") {
+            console.error(
+                `❌ isValidId: Se esperaba un número, se recibio ${typeof valor}`,
+            );
             return false;
         }
 
         // Paso 4: Verificar que no sea NaN o Infinity
-        if(isNaN(idNumerico) || !isFinite(idNumerico)) {
+        if (isNaN(idNumerico) || !isFinite(idNumerico)) {
             console.error(`❌ isValidId: El ID no es un número válido`);
             return false;
         }
 
         // Paso 5: Verificar que sea entero
-        if(!Number.isInteger(idNumerico)) {
-            console.error(`❌ isValidId: El ID debe ser un número entero (recibido: ${idNumerico})`);
+        if (!Number.isInteger(idNumerico)) {
+            console.error(
+                `❌ isValidId: El ID debe ser un número entero (recibido: ${idNumerico})`,
+            );
             return false;
         }
 
         // Paso 6: Verificar que sea positivo
-        if(idNumerico < min) {
-            console.log(`❌ isValidId: El ID debe ser mayor o igual a ${min} (recibido: ${idNumerico})`);
+        if (idNumerico < min) {
+            console.log(
+                `❌ isValidId: El ID debe ser mayor o igual a ${min} (recibido: ${idNumerico})`,
+            );
             return false;
         }
 
         // Paso 7: Verificar rango máximo
-        if(idNumerico > max) {
-            console.error(`❌ idValidId: El ID debe ser menor o igual a ${max} (recibido: ${idNumerico})`);
+        if (idNumerico > max) {
+            console.error(
+                `❌ idValidId: El ID debe ser menor o igual a ${max} (recibido: ${idNumerico})`,
+            );
             return false;
         }
 
@@ -648,5 +666,5 @@ export const Validaciones = {
         const tipo = esString ? `string "${valor}"` : `número ${idNumerico}`;
         console.log(`✅ isValidId: ${tipo} es válido`);
         return true;
-    }
+    },
 };
