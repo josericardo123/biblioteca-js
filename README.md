@@ -41,7 +41,7 @@ Sistema de gestión de biblioteca desarrollado con **JavaScript puro** como part
 - [x] `isValidId` - Validación de IDs
 
 ### Fase 2 - Módulo de Libros (Próximamente)
-- [ ] CRUD completo de libros
+- [x] CRUD completo de libros
 - [ ] Búsqueda por título, autor, ISBN
 - [ ] Gestión de stock/disponibilidad
 
