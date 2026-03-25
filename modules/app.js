@@ -1,73 +1,157 @@
 // modules/app.js
 import { Validaciones } from "../utils/validaciones.js";
 import { Libro } from "../libros.js";
+import { LibrosRepo } from "./librosRepo.js";
 import { librosIniciales } from "../data/inicial.js";
 
 console.log(
-    "%C📚 SPRINT 2 - MODULO DE LIBROS",
-    "color: red; font-size: 18px; font-weight: bold",
+    "%c📚 SPRINT 2 - MODULO DE LIBROS",
+    "color: teal; font-size: 18px; font-weight: bold",
 );
 
-// Prueba 1: Crear libro válido
-console.log("\n📖 Prueba 1: Crear libro válido");
-try {
-    const libro1 = new Libro({
-        titulo: "El Principito",
-        autor: "Antonie de Saint-Exupéry",
-        isbn: "978-84-376-0494-7",
-        anioPublicacion: 1943,
-    });
-    console.log("✅ Libro creado: ", libro1.titulo);
-    console.log(libro1.toJSON);
-} catch (error) {
-    console.error("❌ Error: ", error.message);
+// Cargar libros iniciales
+LibrosRepo.cargarLibrosIniciales(librosIniciales);
+
+console.log('\n📖 PRUEBA 1: Obtener todos los libros');
+const todos = LibrosRepo.obtenerTodos();
+// console.table(todos);
+console.log(`Total de libros: ${todos.length}`);
+todos.forEach((libro) => {
+    console.log(`   ${libro.id}. ${libro.titulo} - ${libro.autor} (${libro.disponible ? '✅ Disponible' : '❌ Prestado'})`);
+});
+
+console.log('\n📖 PRUEBA 2: Buscar libros por "Quijote"');
+const resultado = LibrosRepo.buscar('Quijote');
+//console.table(resultado);
+resultado.forEach((libro) => {
+      console.log(`   ${libro.titulo} - ${libro.autor}`);
+});
+
+console.log('\n📖 PRUEBA 3: Obtener libro con ID 2');
+const libro2 = LibrosRepo.obtenerPorId(2);
+if(libro2) {
+    console.log(`   Libro encontrado: ${libro2.titulo}`);
 }
 
-// Prueba 2: Crear libro con título inválido
-console.log("\n📖 Prueba 2: Crear libro con título inválido");
-try {
-    const libro2 = new Libro({
-        titulo: "",
-        autor: "Antonie de Saint-Exupéry",
-        isbn: "978-84-376-0494-7",
-        anioPublicacion: 1943,
-    });
-    console.log("✅ Libro creado");
-} catch (error) {
-    console.error("❌ Error: ", error.message);
+console.log('\n📖 PRUEBA 4: Agregar nuevo libro');
+const nuevoLibro = LibrosRepo.agregar({
+    titulo: "JavaScript: The Good Parts",
+    autor: "Douglas Crockford",
+    isbn: "978-0-596-51774-8",
+    anioPublicacion: 2008
+});
+
+if(nuevoLibro) {
+    console.log(`   ✅ Libro agregado: ${nuevoLibro.titulo} (ID: ${nuevoLibro.id})`);
 }
 
-// Prueba 3: Crear libro con ISBN inválido
-console.log("\n📖 Prueba 3: Crear libro con ISBN inválido");
-try {
-    const libro3 = new Libro({
-        titulo: "Libro Test",
-        autor: "Autor Test",
-        isbn: "1234567890",
-        anioPublicacion: 2020,
-    });
-    console.log("✅ Libro creado");
-} catch (error) {
-    console.error("❌ Error:", error.message);
+console.log('\n📖 PRUEBA 5: Intentar agregar libro con ISBN duplicado');
+const libroDuplicado = LibrosRepo.agregar({
+    titulo: "Otro libro",
+    autor: "Otro autor",
+    isbn: "978-84-376-0494-7", // Mismo ISBN
+    anioPublicacion: 2000
+});
+
+console.log('\n📖 PRUEBA 6: Actualizar libro ID 1');
+const libroActualizado = LibrosRepo.actualizar(1, {
+    titulo: "Cien años de soledad (Edición Especial)"
+});
+
+if(libroActualizado) {
+    console.log(`   ✅ Título actualizado: ${libroActualizado.titulo}`);
 }
 
-// Prueba 4: Probar método prestar()
-console.log("\n📖 Prueba 4: Probar método prestar()");
-try {
-    const libro4 = new Libro({
-        titulo: "Libro para préstamo",
-        autor: "Autor Test",
-        isbn: "978-84-376-0494-7",
-        anioPublicacion: 2020,
-    });
-    console.log("Libro disponible", libro4.disponible);
-    libro4.prestar();
-    console.log("Después de prestar:", libro4.disponible);
-    libro4.devolver();
-    console.log("Después de devolver:", libro4.disponible);
-} catch (error) {
-    console.error("❌ Error: ", error.message);
+console.log('\n📖 PRUEBA 7: Libros disponibles');
+const disponibles = LibrosRepo.obtenerDisponibles();
+console.log(`   Total disponibles: ${disponibles.length}`);
+// console.table(disponibles);
+disponibles.forEach(libro => {
+    console.log(`   ${libro.titulo}`);
+});
+
+console.log('\n📖 PRUEBA 8: Libros prestados');
+const prestados = LibrosRepo.obtenerPrestados();
+console.table(prestados);
+prestados.forEach(libro => {
+    console.log(`   ${libro.titulo}`);
+});
+
+console.log('\n📖 PRUEBA 9: Eliminar libro ID 3');
+const eliminado = LibrosRepo.eliminar(3);
+if(eliminado) {
+    console.log(`   ✅ Libro eliminado`);
 }
+
+console.log('\n📖 PRUEBA 10: Estado final de libros');
+const final = LibrosRepo.obtenerTodos();
+// console.table(final);
+final.forEach(libro => {
+    console.log(`   ${libro.id}. ${libro.titulo} - ${libro.disponible ? '✅' : '❌'}`);
+});
+
+
+
+// // Prueba 1: Crear libro válido
+// console.log("\n📖 Prueba 1: Crear libro válido");
+// try {
+//     const libro1 = new Libro({
+//         titulo: "El Principito",
+//         autor: "Antonie de Saint-Exupéry",
+//         isbn: "978-84-376-0494-7",
+//         anioPublicacion: 1943,
+//     });
+//     console.log("✅ Libro creado: ", libro1.titulo);
+//     console.log(libro1.toJSON);
+// } catch (error) {
+//     console.error("❌ Error: ", error.message);
+// }
+
+// // Prueba 2: Crear libro con título inválido
+// console.log("\n📖 Prueba 2: Crear libro con título inválido");
+// try {
+//     const libro2 = new Libro({
+//         titulo: "",
+//         autor: "Antonie de Saint-Exupéry",
+//         isbn: "978-84-376-0494-7",
+//         anioPublicacion: 1943,
+//     });
+//     console.log("✅ Libro creado");
+// } catch (error) {
+//     console.error("❌ Error: ", error.message);
+// }
+
+// // Prueba 3: Crear libro con ISBN inválido
+// console.log("\n📖 Prueba 3: Crear libro con ISBN inválido");
+// try {
+//     const libro3 = new Libro({
+//         titulo: "Libro Test",
+//         autor: "Autor Test",
+//         isbn: "1234567890",
+//         anioPublicacion: 2020,
+//     });
+//     console.log("✅ Libro creado");
+// } catch (error) {
+//     console.error("❌ Error:", error.message);
+// }
+
+// // Prueba 4: Probar método prestar()
+// console.log("\n📖 Prueba 4: Probar método prestar()");
+// try {
+//     const libro4 = new Libro({
+//         titulo: "Libro para préstamo",
+//         autor: "Autor Test",
+//         isbn: "978-84-376-0494-7",
+//         anioPublicacion: 2020,
+//     });
+//     console.log("Libro disponible", libro4.disponible);
+//     libro4.prestar();
+//     console.log("Después de prestar:", libro4.disponible);
+//     libro4.devolver();
+//     console.log("Después de devolver:", libro4.disponible);
+// } catch (error) {
+//     console.error("❌ Error: ", error.message);
+// }
 
 /** ---------------------- SPRINT 2 */
 

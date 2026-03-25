@@ -7,24 +7,24 @@ export const librosIniciales = [
         isbn: "978-84-376-0494-7",
         anioPublicacion: 1967,
         disponible: true,
-        fechaRegistro: "2024-01-15",
+        fechaRegistro: "2024-01-15"
     },
     {
         id: 2,
         titulo: "El Quijote",
         autor: "Miguel de Cervantes",
-        isbn: "978-84-376-0494-8",
+        isbn: "978-84-239-7948-6",
         anioPublicacion: 1605,
         disponible: true,
-        fechaRegistro: "2024-01-15",
+        fechaRegistro: "2024-01-15"
     },
     {
         id: 3,
         titulo: "1984",
         autor: "George Orwell",
-        isbn: "978-84-376-0494-9",
+        isbn: "978-84-9759-329-8",
         anioPublicacion: 1949,
         disponible: false,
-        fechaRegistro: "2024-01-15",
-    },
+        fechaRegistro: "2024-01-15"
+    }
 ];

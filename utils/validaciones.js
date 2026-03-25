@@ -58,7 +58,7 @@ export const Validaciones = {
         }
 
         // Paso 7: Si pasa todas las validaciones
-        console.log(`✅ isValidString: "${valorLimpio}" es válido`);
+        // console.log(`✅ isValidString: "${valorLimpio}" es válido`);
         return true;
     },
 
@@ -165,7 +165,7 @@ export const Validaciones = {
         }
 
         // Paso 9: si pasa todas las validaciones
-        console.log(`✅ isValidEmail: "${email}" es válido`);
+        // console.log(`✅ isValidEmail: "${email}" es válido`);
         return true;
     },
 
@@ -245,7 +245,7 @@ export const Validaciones = {
      * @private
      */
     _validarISBN13(isbn) {
-        console.log("🔍 Validando ISBN-13:", isbn);
+        // console.log("🔍 Validando ISBN-13:", isbn);
 
         // Paso 1: Verificar longitud
         if (isbn.length !== 13) {
@@ -288,7 +288,7 @@ export const Validaciones = {
         // console.log(`   Dígito control proporcionado: ${digitoControl}`);
 
         if (isNaN(digitoControl)) {
-            console.log("   ❌ Dígito control inválido");
+            console.error(" ❌ Dígito control inválido");
             return false;
         }
 
@@ -341,7 +341,7 @@ export const Validaciones = {
 
         // Paso 5: Mostrar resultado
         if (esValido) {
-            console.log(`✅ isValidISBN: "${isbn}" es válido`);
+            // console.log(`✅ isValidISBN: "${isbn}" es válido`);
         } else {
             console.error(
                 `❌ isValidISBN: "${isbn}" no es válido (dígito de control incorrecto)`,
@@ -425,7 +425,7 @@ export const Validaciones = {
         }
 
         // Paso 8: Si pasa todas las validaciones
-        console.log(`✅ isValidDate: "${fechaStr}" es válido`);
+        // console.log(`✅ isValidDate: "${fechaStr}" es válido`);
         return true;
     },
 
@@ -504,7 +504,7 @@ export const Validaciones = {
         }
 
         // Paso 8: Si pasa todas las validaciones
-        console.log(`✅ isValidNumber: ${valor} es válido`);
+        // console.log(`✅ isValidNumber: ${valor} es válido`);
         return true;
     },
 
@@ -575,9 +575,7 @@ export const Validaciones = {
         }
 
         // Paso 6: Si pasa todas las validaciones
-        console.log(
-            `✅ isValidArray: Array de ${valor.length} elemento(s) es válido`,
-        );
+        // console.log(`✅ isValidArray: Array de ${valor.length} elemento(s) es válido`);
         return true;
     },
 
