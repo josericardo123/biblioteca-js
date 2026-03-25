@@ -42,7 +42,7 @@ Sistema de gestión de biblioteca desarrollado con **JavaScript puro** como part
 
 ### Fase 2 - Módulo de Libros (Próximamente)
 - [x] CRUD completo de libros
-- [ ] Búsqueda por título, autor, ISBN
+- [x] Búsqueda por título, autor, ISBN
 - [ ] Gestión de stock/disponibilidad
 
 ### Fase 3 - Módulo de Usuarios
