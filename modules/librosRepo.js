@@ -124,6 +124,8 @@ export const LibrosRepo = (() => {
                 libro.anioPublicacion = datosActualizados.anioPublicacion;
             }
 
+            libro.disponible = datosActualizados.disponible;
+
             console.log(`✅ Libro "${libro.titulo}" actualizado`);
             return libro;
         } catch (error) {

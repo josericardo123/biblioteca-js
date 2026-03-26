@@ -1,94 +1,104 @@
 // modules/app.js
 import { Validaciones } from "../utils/validaciones.js";
-import { Libro } from "../libros.js";
 import { LibrosRepo } from "./librosRepo.js";
 import { librosIniciales } from "../data/inicial.js";
+import { LibrosUI } from "./librosUI.js";
+
+// console.log(
+//     "%c📚 SPRINT 2 - MODULO DE LIBROS",
+//     "color: teal; font-size: 18px; font-weight: bold",
+// );
 
 console.log(
-    "%c📚 SPRINT 2 - MODULO DE LIBROS",
+    "%c📚 SISTEMA DE BIBLIOTECA INICIADO",
     "color: teal; font-size: 18px; font-weight: bold",
 );
 
-// Cargar libros iniciales
 LibrosRepo.cargarLibrosIniciales(librosIniciales);
+LibrosUI.inicializar();
 
-console.log('\n📖 PRUEBA 1: Obtener todos los libros');
-const todos = LibrosRepo.obtenerTodos();
-// console.table(todos);
-console.log(`Total de libros: ${todos.length}`);
-todos.forEach((libro) => {
-    console.log(`   ${libro.id}. ${libro.titulo} - ${libro.autor} (${libro.disponible ? '✅ Disponible' : '❌ Prestado'})`);
-});
+console.log(`✅ UI de libros inicializada`);
 
-console.log('\n📖 PRUEBA 2: Buscar libros por "Quijote"');
-const resultado = LibrosRepo.buscar('Quijote');
-//console.table(resultado);
-resultado.forEach((libro) => {
-      console.log(`   ${libro.titulo} - ${libro.autor}`);
-});
+// // Cargar libros iniciales
+// LibrosRepo.cargarLibrosIniciales(librosIniciales);
 
-console.log('\n📖 PRUEBA 3: Obtener libro con ID 2');
-const libro2 = LibrosRepo.obtenerPorId(2);
-if(libro2) {
-    console.log(`   Libro encontrado: ${libro2.titulo}`);
-}
+// console.log('\n📖 PRUEBA 1: Obtener todos los libros');
+// const todos = LibrosRepo.obtenerTodos();
+// // console.table(todos);
+// console.log(`Total de libros: ${todos.length}`);
+// todos.forEach((libro) => {
+//     console.log(`   ${libro.id}. ${libro.titulo} - ${libro.autor} (${libro.disponible ? '✅ Disponible' : '❌ Prestado'})`);
+// });
 
-console.log('\n📖 PRUEBA 4: Agregar nuevo libro');
-const nuevoLibro = LibrosRepo.agregar({
-    titulo: "JavaScript: The Good Parts",
-    autor: "Douglas Crockford",
-    isbn: "978-0-596-51774-8",
-    anioPublicacion: 2008
-});
+// console.log('\n📖 PRUEBA 2: Buscar libros por "Quijote"');
+// const resultado = LibrosRepo.buscar('Quijote');
+// //console.table(resultado);
+// resultado.forEach((libro) => {
+//       console.log(`   ${libro.titulo} - ${libro.autor}`);
+// });
 
-if(nuevoLibro) {
-    console.log(`   ✅ Libro agregado: ${nuevoLibro.titulo} (ID: ${nuevoLibro.id})`);
-}
+// console.log('\n📖 PRUEBA 3: Obtener libro con ID 2');
+// const libro2 = LibrosRepo.obtenerPorId(2);
+// if(libro2) {
+//     console.log(`   Libro encontrado: ${libro2.titulo}`);
+// }
 
-console.log('\n📖 PRUEBA 5: Intentar agregar libro con ISBN duplicado');
-const libroDuplicado = LibrosRepo.agregar({
-    titulo: "Otro libro",
-    autor: "Otro autor",
-    isbn: "978-84-376-0494-7", // Mismo ISBN
-    anioPublicacion: 2000
-});
+// console.log('\n📖 PRUEBA 4: Agregar nuevo libro');
+// const nuevoLibro = LibrosRepo.agregar({
+//     titulo: "JavaScript: The Good Parts",
+//     autor: "Douglas Crockford",
+//     isbn: "978-0-596-51774-8",
+//     anioPublicacion: 2008
+// });
 
-console.log('\n📖 PRUEBA 6: Actualizar libro ID 1');
-const libroActualizado = LibrosRepo.actualizar(1, {
-    titulo: "Cien años de soledad (Edición Especial)"
-});
+// if(nuevoLibro) {
+//     console.log(`   ✅ Libro agregado: ${nuevoLibro.titulo} (ID: ${nuevoLibro.id})`);
+// }
 
-if(libroActualizado) {
-    console.log(`   ✅ Título actualizado: ${libroActualizado.titulo}`);
-}
+// console.log('\n📖 PRUEBA 5: Intentar agregar libro con ISBN duplicado');
+// const libroDuplicado = LibrosRepo.agregar({
+//     titulo: "Otro libro",
+//     autor: "Otro autor",
+//     isbn: "978-84-376-0494-7", // Mismo ISBN
+//     anioPublicacion: 2000
+// });
 
-console.log('\n📖 PRUEBA 7: Libros disponibles');
-const disponibles = LibrosRepo.obtenerDisponibles();
-console.log(`   Total disponibles: ${disponibles.length}`);
-// console.table(disponibles);
-disponibles.forEach(libro => {
-    console.log(`   ${libro.titulo}`);
-});
+// console.log('\n📖 PRUEBA 6: Actualizar libro ID 1');
+// const libroActualizado = LibrosRepo.actualizar(1, {
+//     titulo: "Cien años de soledad (Edición Especial)"
+// });
 
-console.log('\n📖 PRUEBA 8: Libros prestados');
-const prestados = LibrosRepo.obtenerPrestados();
-console.table(prestados);
-prestados.forEach(libro => {
-    console.log(`   ${libro.titulo}`);
-});
+// if(libroActualizado) {
+//     console.log(`   ✅ Título actualizado: ${libroActualizado.titulo}`);
+// }
 
-console.log('\n📖 PRUEBA 9: Eliminar libro ID 3');
-const eliminado = LibrosRepo.eliminar(3);
-if(eliminado) {
-    console.log(`   ✅ Libro eliminado`);
-}
+// console.log('\n📖 PRUEBA 7: Libros disponibles');
+// const disponibles = LibrosRepo.obtenerDisponibles();
+// console.log(`   Total disponibles: ${disponibles.length}`);
+// // console.table(disponibles);
+// disponibles.forEach(libro => {
+//     console.log(`   ${libro.titulo}`);
+// });
 
-console.log('\n📖 PRUEBA 10: Estado final de libros');
-const final = LibrosRepo.obtenerTodos();
-// console.table(final);
-final.forEach(libro => {
-    console.log(`   ${libro.id}. ${libro.titulo} - ${libro.disponible ? '✅' : '❌'}`);
-});
+// console.log('\n📖 PRUEBA 8: Libros prestados');
+// const prestados = LibrosRepo.obtenerPrestados();
+// console.table(prestados);
+// prestados.forEach(libro => {
+//     console.log(`   ${libro.titulo}`);
+// });
+
+// console.log('\n📖 PRUEBA 9: Eliminar libro ID 3');
+// const eliminado = LibrosRepo.eliminar(3);
+// if(eliminado) {
+//     console.log(`   ✅ Libro eliminado`);
+// }
+
+// console.log('\n📖 PRUEBA 10: Estado final de libros');
+// const final = LibrosRepo.obtenerTodos();
+// // console.table(final);
+// final.forEach(libro => {
+//     console.log(`   ${libro.id}. ${libro.titulo} - ${libro.disponible ? '✅' : '❌'}`);
+// });
 
 
 
