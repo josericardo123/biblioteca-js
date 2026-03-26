@@ -1,5 +1,169 @@
 // modules/app.js
- import { Validaciones } from '../utils/validaciones.js';
+import { Validaciones } from "../utils/validaciones.js";
+import { LibrosRepo } from "./librosRepo.js";
+import { librosIniciales } from "../data/inicial.js";
+import { LibrosUI } from "./librosUI.js";
+
+// console.log(
+//     "%c📚 SPRINT 2 - MODULO DE LIBROS",
+//     "color: teal; font-size: 18px; font-weight: bold",
+// );
+
+console.log(
+    "%c📚 SISTEMA DE BIBLIOTECA INICIADO",
+    "color: teal; font-size: 18px; font-weight: bold",
+);
+
+LibrosRepo.cargarLibrosIniciales(librosIniciales);
+LibrosUI.inicializar();
+
+console.log(`✅ UI de libros inicializada`);
+
+// // Cargar libros iniciales
+// LibrosRepo.cargarLibrosIniciales(librosIniciales);
+
+// console.log('\n📖 PRUEBA 1: Obtener todos los libros');
+// const todos = LibrosRepo.obtenerTodos();
+// // console.table(todos);
+// console.log(`Total de libros: ${todos.length}`);
+// todos.forEach((libro) => {
+//     console.log(`   ${libro.id}. ${libro.titulo} - ${libro.autor} (${libro.disponible ? '✅ Disponible' : '❌ Prestado'})`);
+// });
+
+// console.log('\n📖 PRUEBA 2: Buscar libros por "Quijote"');
+// const resultado = LibrosRepo.buscar('Quijote');
+// //console.table(resultado);
+// resultado.forEach((libro) => {
+//       console.log(`   ${libro.titulo} - ${libro.autor}`);
+// });
+
+// console.log('\n📖 PRUEBA 3: Obtener libro con ID 2');
+// const libro2 = LibrosRepo.obtenerPorId(2);
+// if(libro2) {
+//     console.log(`   Libro encontrado: ${libro2.titulo}`);
+// }
+
+// console.log('\n📖 PRUEBA 4: Agregar nuevo libro');
+// const nuevoLibro = LibrosRepo.agregar({
+//     titulo: "JavaScript: The Good Parts",
+//     autor: "Douglas Crockford",
+//     isbn: "978-0-596-51774-8",
+//     anioPublicacion: 2008
+// });
+
+// if(nuevoLibro) {
+//     console.log(`   ✅ Libro agregado: ${nuevoLibro.titulo} (ID: ${nuevoLibro.id})`);
+// }
+
+// console.log('\n📖 PRUEBA 5: Intentar agregar libro con ISBN duplicado');
+// const libroDuplicado = LibrosRepo.agregar({
+//     titulo: "Otro libro",
+//     autor: "Otro autor",
+//     isbn: "978-84-376-0494-7", // Mismo ISBN
+//     anioPublicacion: 2000
+// });
+
+// console.log('\n📖 PRUEBA 6: Actualizar libro ID 1');
+// const libroActualizado = LibrosRepo.actualizar(1, {
+//     titulo: "Cien años de soledad (Edición Especial)"
+// });
+
+// if(libroActualizado) {
+//     console.log(`   ✅ Título actualizado: ${libroActualizado.titulo}`);
+// }
+
+// console.log('\n📖 PRUEBA 7: Libros disponibles');
+// const disponibles = LibrosRepo.obtenerDisponibles();
+// console.log(`   Total disponibles: ${disponibles.length}`);
+// // console.table(disponibles);
+// disponibles.forEach(libro => {
+//     console.log(`   ${libro.titulo}`);
+// });
+
+// console.log('\n📖 PRUEBA 8: Libros prestados');
+// const prestados = LibrosRepo.obtenerPrestados();
+// console.table(prestados);
+// prestados.forEach(libro => {
+//     console.log(`   ${libro.titulo}`);
+// });
+
+// console.log('\n📖 PRUEBA 9: Eliminar libro ID 3');
+// const eliminado = LibrosRepo.eliminar(3);
+// if(eliminado) {
+//     console.log(`   ✅ Libro eliminado`);
+// }
+
+// console.log('\n📖 PRUEBA 10: Estado final de libros');
+// const final = LibrosRepo.obtenerTodos();
+// // console.table(final);
+// final.forEach(libro => {
+//     console.log(`   ${libro.id}. ${libro.titulo} - ${libro.disponible ? '✅' : '❌'}`);
+// });
+
+
+
+// // Prueba 1: Crear libro válido
+// console.log("\n📖 Prueba 1: Crear libro válido");
+// try {
+//     const libro1 = new Libro({
+//         titulo: "El Principito",
+//         autor: "Antonie de Saint-Exupéry",
+//         isbn: "978-84-376-0494-7",
+//         anioPublicacion: 1943,
+//     });
+//     console.log("✅ Libro creado: ", libro1.titulo);
+//     console.log(libro1.toJSON);
+// } catch (error) {
+//     console.error("❌ Error: ", error.message);
+// }
+
+// // Prueba 2: Crear libro con título inválido
+// console.log("\n📖 Prueba 2: Crear libro con título inválido");
+// try {
+//     const libro2 = new Libro({
+//         titulo: "",
+//         autor: "Antonie de Saint-Exupéry",
+//         isbn: "978-84-376-0494-7",
+//         anioPublicacion: 1943,
+//     });
+//     console.log("✅ Libro creado");
+// } catch (error) {
+//     console.error("❌ Error: ", error.message);
+// }
+
+// // Prueba 3: Crear libro con ISBN inválido
+// console.log("\n📖 Prueba 3: Crear libro con ISBN inválido");
+// try {
+//     const libro3 = new Libro({
+//         titulo: "Libro Test",
+//         autor: "Autor Test",
+//         isbn: "1234567890",
+//         anioPublicacion: 2020,
+//     });
+//     console.log("✅ Libro creado");
+// } catch (error) {
+//     console.error("❌ Error:", error.message);
+// }
+
+// // Prueba 4: Probar método prestar()
+// console.log("\n📖 Prueba 4: Probar método prestar()");
+// try {
+//     const libro4 = new Libro({
+//         titulo: "Libro para préstamo",
+//         autor: "Autor Test",
+//         isbn: "978-84-376-0494-7",
+//         anioPublicacion: 2020,
+//     });
+//     console.log("Libro disponible", libro4.disponible);
+//     libro4.prestar();
+//     console.log("Después de prestar:", libro4.disponible);
+//     libro4.devolver();
+//     console.log("Después de devolver:", libro4.disponible);
+// } catch (error) {
+//     console.error("❌ Error: ", error.message);
+// }
+
+/** ---------------------- SPRINT 2 */
 
 //  console.log('%c🧪 PRUEBAS DE VALIDACIONES', 'color: purple; font-size: 16px; font-weight: bold;');
 
@@ -472,115 +636,115 @@
 
 // modules/app.js - Añadir después de las pruebas de array
 
-console.log('%c🆔 Probando isValidId:', 'color: teal; font-size: 14px; font-weight: bold;');
-console.log('----------------------------------------');
+// console.log('%c🆔 Probando isValidId:', 'color: teal; font-size: 14px; font-weight: bold;');
+// console.log('----------------------------------------');
 
-// =============================================
-// IDs VÁLIDOS (SIN OPCIONES)
-// =============================================
-console.log('🆔 IDs VÁLIDOS (sin opciones):');
+// // =============================================
+// // IDs VÁLIDOS (SIN OPCIONES)
+// // =============================================
+// console.log('🆔 IDs VÁLIDOS (sin opciones):');
 
-console.log('Caso 1: 1');
-const id1 = Validaciones.isValidId(1);
-console.log('Resultado:', id1 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 1: 1');
+// const id1 = Validaciones.isValidId(1);
+// console.log('Resultado:', id1 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-console.log('Caso 2: 100');
-const id2 = Validaciones.isValidId(100);
-console.log('Resultado:', id2 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 2: 100');
+// const id2 = Validaciones.isValidId(100);
+// console.log('Resultado:', id2 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-console.log('Caso 3: 999999');
-const id3 = Validaciones.isValidId(999999);
-console.log('Resultado:', id3 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 3: 999999');
+// const id3 = Validaciones.isValidId(999999);
+// console.log('Resultado:', id3 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-// =============================================
-// IDs VÁLIDOS (CON OPCIONES)
-// =============================================
-console.log('🆔 IDs VÁLIDOS (con opciones):');
+// // =============================================
+// // IDs VÁLIDOS (CON OPCIONES)
+// // =============================================
+// console.log('🆔 IDs VÁLIDOS (con opciones):');
 
-console.log('Caso 4: "123" con { permitirString: true }');
-const id4 = Validaciones.isValidId("123", { permitirString: true });
-console.log('Resultado:', id4 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 4: "123" con { permitirString: true }');
+// const id4 = Validaciones.isValidId("123", { permitirString: true });
+// console.log('Resultado:', id4 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-console.log('Caso 5: 50 con { min: 10, max: 100 }');
-const id5 = Validaciones.isValidId(50, { min: 10, max: 100 });
-console.log('Resultado:', id5 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 5: 50 con { min: 10, max: 100 }');
+// const id5 = Validaciones.isValidId(50, { min: 10, max: 100 });
+// console.log('Resultado:', id5 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-console.log('Caso 6: 10 con { min: 10, max: 100 }');
-const id6 = Validaciones.isValidId(10, { min: 10, max: 100 });
-console.log('Resultado:', id6 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 6: 10 con { min: 10, max: 100 }');
+// const id6 = Validaciones.isValidId(10, { min: 10, max: 100 });
+// console.log('Resultado:', id6 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-console.log('Caso 7: 100 con { min: 10, max: 100 }');
-const id7 = Validaciones.isValidId(100, { min: 10, max: 100 });
-console.log('Resultado:', id7 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 7: 100 con { min: 10, max: 100 }');
+// const id7 = Validaciones.isValidId(100, { min: 10, max: 100 });
+// console.log('Resultado:', id7 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-console.log('Caso 8: "1" con { permitirString: true, min: 1, max: 100 }');
-const id8 = Validaciones.isValidId("1", { permitirString: true, min: 1, max: 100 });
-console.log('Resultado:', id8 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 8: "1" con { permitirString: true, min: 1, max: 100 }');
+// const id8 = Validaciones.isValidId("1", { permitirString: true, min: 1, max: 100 });
+// console.log('Resultado:', id8 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-// =============================================
-// IDs INVÁLIDOS
-// =============================================
-console.log('❌ IDs INVÁLIDOS:');
+// // =============================================
+// // IDs INVÁLIDOS
+// // =============================================
+// console.log('❌ IDs INVÁLIDOS:');
 
-console.log('Caso 9: 0 (debe ser >= 1)');
-const id9 = Validaciones.isValidId(0);
-console.log('Resultado:', id9 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 9: 0 (debe ser >= 1)');
+// const id9 = Validaciones.isValidId(0);
+// console.log('Resultado:', id9 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-console.log('Caso 10: -5 (negativo)');
-const id10 = Validaciones.isValidId(-5);
-console.log('Resultado:', id10 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 10: -5 (negativo)');
+// const id10 = Validaciones.isValidId(-5);
+// console.log('Resultado:', id10 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-console.log('Caso 11: 1.5 (decimal)');
-const id11 = Validaciones.isValidId(1.5);
-console.log('Resultado:', id11 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 11: 1.5 (decimal)');
+// const id11 = Validaciones.isValidId(1.5);
+// console.log('Resultado:', id11 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-console.log('Caso 12: 1000000 (excede max por defecto)');
-const id12 = Validaciones.isValidId(1000000);
-console.log('Resultado:', id12 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 12: 1000000 (excede max por defecto)');
+// const id12 = Validaciones.isValidId(1000000);
+// console.log('Resultado:', id12 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-console.log('Caso 13: null');
-const id13 = Validaciones.isValidId(null);
-console.log('Resultado:', id13 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 13: null');
+// const id13 = Validaciones.isValidId(null);
+// console.log('Resultado:', id13 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-console.log('Caso 14: undefined');
-const id14 = Validaciones.isValidId(undefined);
-console.log('Resultado:', id14 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 14: undefined');
+// const id14 = Validaciones.isValidId(undefined);
+// console.log('Resultado:', id14 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-console.log('Caso 15: "abc" (string sin permitir)');
-const id15 = Validaciones.isValidId("abc");
-console.log('Resultado:', id15 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 15: "abc" (string sin permitir)');
+// const id15 = Validaciones.isValidId("abc");
+// console.log('Resultado:', id15 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-console.log('Caso 16: "abc" con { permitirString: true } (contiene letras)');
-const id16 = Validaciones.isValidId("abc", { permitirString: true });
-console.log('Resultado:', id16 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 16: "abc" con { permitirString: true } (contiene letras)');
+// const id16 = Validaciones.isValidId("abc", { permitirString: true });
+// console.log('Resultado:', id16 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-console.log('Caso 17: "12a3" con { permitirString: true } (contiene letras)');
-const id17 = Validaciones.isValidId("12a3", { permitirString: true });
-console.log('Resultado:', id17 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 17: "12a3" con { permitirString: true } (contiene letras)');
+// const id17 = Validaciones.isValidId("12a3", { permitirString: true });
+// console.log('Resultado:', id17 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-console.log('Caso 18: 150 con { max: 100 }');
-const id18 = Validaciones.isValidId(150, { max: 100 });
-console.log('Resultado:', id18 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 18: 150 con { max: 100 }');
+// const id18 = Validaciones.isValidId(150, { max: 100 });
+// console.log('Resultado:', id18 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');
 
-console.log('Caso 19: 5 con { min: 10, max: 100 }');
-const id19 = Validaciones.isValidId(5, { min: 10, max: 100 });
-console.log('Resultado:', id19 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
-console.log('----------------------------------------');
+// console.log('Caso 19: 5 con { min: 10, max: 100 }');
+// const id19 = Validaciones.isValidId(5, { min: 10, max: 100 });
+// console.log('Resultado:', id19 ? '✅ VÁLIDO' : '❌ INVÁLIDO');
+// console.log('----------------------------------------');

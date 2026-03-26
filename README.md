@@ -22,8 +22,8 @@ Sistema de gestión de biblioteca desarrollado con **JavaScript puro** como part
 ### PRODUCTO BACKLOG
 📋 PRODUCT BACKLOG (Lista de todo lo que hay que hacer)
 ├── 🎯 ÉPICAS (Grandes funcionalidades)
-│   ├── 📦 SPRINT 1: Módulo de Validaciones
-│   ├── 📦 SPRINT 2: Módulo de Libros
+│   ├── 📦 SPRINT 1: Módulo de Validaciones - ✅
+│   ├── 📦 SPRINT 2: Módulo de Libros - ✅
 │   ├── 📦 SPRINT 3: Módulo de Usuarios
 │   ├── 📦 SPRINT 4: Módulo de Préstamos
 │   ├── 📦 SPRINT 5: UI y Persistencia
@@ -41,9 +41,9 @@ Sistema de gestión de biblioteca desarrollado con **JavaScript puro** como part
 - [x] `isValidId` - Validación de IDs
 
 ### Fase 2 - Módulo de Libros (Próximamente)
-- [ ] CRUD completo de libros
-- [ ] Búsqueda por título, autor, ISBN
-- [ ] Gestión de stock/disponibilidad
+- [x] CRUD completo de libros
+- [x] Búsqueda por título, autor, ISBN
+- [x] Gestión de stock/disponibilidad
 
 ### Fase 3 - Módulo de Usuarios
 - [ ] Registro de usuarios
