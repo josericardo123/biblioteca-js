@@ -3,16 +3,136 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Biblioteca Virtual</title>
+        <link rel="icon" href="../favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="./styles.css">
+        <title>Biblioteca Virtual - Sistema de Gestión</title>
     </head>
     <body>
         <header>
             <h1>Biblioteca Virtual</h1>
-            <p>Sistema de gestión de libros</p>
+            <p>Sistema de gestión de libros, usuarios y prestamos</p>
         </header>
         <main>
-            <p>Cargando sistema...</p>
+            <section id="libros-section" class="section">
+                <h2>📚 Gestión de Libros</h2>
+                <div class="form-container">
+                    <h3 id="form-title">➕ Agregar nuevo libro</h3>
+                    <form action="" id="libro-form">
+                        <div class="form-group">
+                            <label for="titulo">Título *</label>
+                            <input type="text" id="titulo" placeholder="Cien años de soledad" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="autor">Autor *</label>
+                            <input type="text" id="autor" placeholder="Gabriel García Márquez" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="isbn">ISBN *</label>
+                            <input type="text" id="isbn" placeholder="978-84-376-0494-7" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="anio">Año publicación *</label>
+                            <input type="text" id="anio" placeholder="1967" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="disponible">Disponible</label>
+                            <select id="disponible">
+                                <option value="true">✅ Disponible</option>
+                                <option value="false">❌ Prestado</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" id="btn-guardar" class="btn-primary">Guardar libro</button>
+                            <button type="button" id="btn-cancelar" class="btn-secondary" style="display: none;">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-container">
+                    <h3>Cátalogo de libros</h3>
+                    <div class="search-bar">
+                        <input type="text" id="buscar-libro" placeholder="Buscar por título, autor o ISBN...">
+                        <button id="btn-buscar" class="btn-search">Buscar</button>
+                        <button id="btn-mostrar-todos" class="btn-search">Mostrar todos</button>
+                    </div>
+                    <table id="libros-table" class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Título</th>
+                                <th>Autor</th>
+                                <th>ISBN</th>
+                                <th>Año</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="libros-tbody">
+                            <tr>
+                                <th colspan="7" style="text-align: center;">Cargando libros...</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section id="usuarios-section" class="section">
+                <h2>👥 Gestión de Usuarios</h2>
+                <div class="form-container">
+                    <h3 id="form-title-usuario">➕ Agregar nuevo usuario</h3>
+                    <form action="" id="usuario-form">
+                        <div class="form-group">
+                            <label for="nombre">Nombre *</label>
+                            <input type="text" id="nombre" placeholder="José Ricardo Cauich Mis" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" placeholder="usuario@email.com" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Télefono *</label>
+                            <input type="text" id="telefono" placeholder="555-1234" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="usuario-activo">Estado *</label>
+                            <select id="usuario-activo">
+                                <option value="true">✅ Activo</option>
+                                <option value="false">❌ Inactivo</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" id="btn-guardar" class="btn-primary">💾 Guardar usuario</button>
+                            <button type="button" id="btn-cancelar" class="btn-secondary" style="display: none;">❌ Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-container">
+                    <h3>📋 Lista de usuarios</h3>
+                    <div class="search-bar">
+                        <input type="text" id="buscar-usuario" placeholder="🔍 Buscar por nombre o email...">
+                        <button id="btn-buscar-usuario" class="btn-search">Buscar</button>
+                        <button id="btn-mostrar-todos-usuarios" class="btn-search">Mostrar todos</button>
+                    </div>
+                    <table id="usuarios-table" class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Télefono</th>
+                                <th>Registro</th>
+                                <th>Préstamos</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usuarios-tbody">
+                            <tr>
+                                <td colpan="8" style="text-align: center;">Cargando usuarios...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         </main>
-        <script src="modules/app.js"></script>
+        <script type="module" src="../modules/app.js"></script>
     </body>
 </html>
