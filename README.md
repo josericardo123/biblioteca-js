@@ -46,8 +46,8 @@ Sistema de gestión de biblioteca desarrollado con **JavaScript puro** como part
 - [x] Gestión de stock/disponibilidad
 
 ### Fase 3 - Módulo de Usuarios
-- [ ] Registro de usuarios
-- [ ] Validación de emails únicos
+- [x] Registro de usuarios
+- [x] Validación de emails únicos
 - [ ] Historial de préstamos
 
 ### Fase 4 - Módulo de Préstamos
