@@ -29,7 +29,7 @@ Sistema de gestión de biblioteca desarrollado con **JavaScript puro** como part
 │   ├── 📦 SPRINT 5: UI y Persistencia
 │   └── 📦 SPRINT 6: Refinamiento y Documentación
 
-### Fase 1 - Módulo de Validaciones (En progreso)
+### Fase 1 - Módulo de Validaciones (Completado)
 - [x] Configuración inicial del proyecto
 - [x] Estructura de carpetas profesional
 - [x] `isValidString` - Validación de strings
@@ -40,15 +40,15 @@ Sistema de gestión de biblioteca desarrollado con **JavaScript puro** como part
 - [x] `isValidArray` - Validación de arrays
 - [x] `isValidId` - Validación de IDs
 
-### Fase 2 - Módulo de Libros (Próximamente)
+### Fase 2 - Módulo de Libros (Completado)
 - [x] CRUD completo de libros
 - [x] Búsqueda por título, autor, ISBN
 - [x] Gestión de stock/disponibilidad
 
 ### Fase 3 - Módulo de Usuarios
-- [ ] Registro de usuarios
-- [ ] Validación de emails únicos
-- [ ] Historial de préstamos
+- [x] Registro de usuarios
+- [x] Validación de emails únicos
+- [x] Historial de préstamos
 
 ### Fase 4 - Módulo de Préstamos
 - [ ] Préstamo de libros

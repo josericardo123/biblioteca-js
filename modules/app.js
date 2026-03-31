@@ -3,9 +3,12 @@ import { Validaciones } from "../utils/validaciones.js";
 import { LibrosRepo } from "./librosRepo.js";
 import { librosIniciales } from "../data/inicial.js";
 import { LibrosUI } from "./librosUI.js";
+import { UsuariosRepo } from "./usuariosRepo.js";
+import { UsuariosIniciales } from "../data/inicial.js";
+import { UsuariosUI } from "./usuariosUI.js";
 
 // console.log(
-//     "%c📚 SPRINT 2 - MODULO DE LIBROS",
+//     "%c📚 SPRINT 2 - SPRINT 3 MODULO DE LIBROS, MODULO DE USUARIOS",
 //     "color: teal; font-size: 18px; font-weight: bold",
 // );
 
@@ -15,7 +18,9 @@ console.log(
 );
 
 LibrosRepo.cargarLibrosIniciales(librosIniciales);
+UsuariosRepo.cargarUsuariosIniciales(UsuariosIniciales);
 LibrosUI.inicializar();
+UsuariosUI.inicializar();
 
 console.log(`✅ UI de libros inicializada`);
 

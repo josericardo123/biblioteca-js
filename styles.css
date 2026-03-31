@@ -62,6 +62,12 @@ main {
     gap: 15px;
 }
 
+#usuario-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
 .form-group {
     display: flex;
     flex-direction: column;
@@ -157,26 +163,26 @@ main {
     color: #555;
 }
 
-#libros-table {
+.table {
     width: 100%;
     border-collapse: collapse;
     background: white;
 }
 
-#libros-table th,
-#libros-table td {
+.table th,
+.table td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
-#libros-table th {
+.table th {
     background: #f8f9fa;
     font-weight: bold;
     color: #333;
 }
 
-#libros-table tr:hover {
+.table tr:hover {
     background: #f5f5f5;
 }
 
@@ -252,5 +258,14 @@ main {
     .search-bar input,
     .search-bar button {
         width: 100%;
+    }
+
+    table tbody td button {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        gap: .3rem;
+        margin-bottom: .3rem;
     }
 }

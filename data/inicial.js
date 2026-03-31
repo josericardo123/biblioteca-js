@@ -28,3 +28,33 @@ export const librosIniciales = [
         fechaRegistro: "2024-01-15"
     }
 ];
+
+export const UsuariosIniciales = [
+    {
+        id: 1,
+        nombre: "Ana García",
+        email: "ana.garcia@email.com",
+        telefono: "555-1234",
+        fecha: "2024-01-15",
+        activo: true,
+        prestamosActivos: 0
+    },
+    {
+        id: 2,
+        nombre: "Carlos Rodríguez",
+        email: "carlos.rodriguez@email.com",
+        telefono: "555-5678",
+        fechaRegistro: "2024-01-20",
+        activo: true,
+        prestamosActivos: 1
+    },
+    {
+        id: 3,
+        nombre: "María López",
+        email: "maria.lopez@email.com",
+        telefono: "555-9012",
+        fechaRegistro: "2024-02-01",
+        activo: true,
+        prestamosActivos: 0
+    }
+];
