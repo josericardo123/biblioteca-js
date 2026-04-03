@@ -1,4 +1,4 @@
-import { Validaciones } from "./utils/validaciones.js";
+import { Validaciones } from "../utils/validaciones.js";
 
 /**
  * Clase que representa un libros en el sistema

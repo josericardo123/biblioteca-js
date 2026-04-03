@@ -1,5 +1,5 @@
 import { Validaciones } from "../utils/validaciones.js";
-import { Libro } from "../libros.js";
+import { Libro } from "./libros.js";
 
 /**
  * Repositorio para la gestión de libros
