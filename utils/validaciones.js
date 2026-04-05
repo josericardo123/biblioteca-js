@@ -662,7 +662,7 @@ export const Validaciones = {
 
         // Paso 8: Si pasa todas las validación
         const tipo = esString ? `string "${valor}"` : `número ${idNumerico}`;
-        console.log(`✅ isValidId: ${tipo} es válido`);
+        // console.log(`✅ isValidId: ${tipo} es válido`);
         return true;
     },
 };
