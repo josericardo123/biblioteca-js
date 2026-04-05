@@ -6,6 +6,9 @@ import { LibrosUI } from "./librosUI.js";
 import { UsuariosRepo } from "./usuariosRepo.js";
 import { UsuariosIniciales } from "../data/inicial.js";
 import { UsuariosUI } from "./usuariosUI.js";
+import { PrestamosRepo } from "./prestamosRepo.js";
+import { prestramosIniciales } from "../data/inicial.js";
+import { PrestamosUI } from "./prestamosUI.js";
 
 // console.log(
 //     "%c📚 SPRINT 2 - SPRINT 3 MODULO DE LIBROS, MODULO DE USUARIOS",
@@ -19,8 +22,11 @@ console.log(
 
 LibrosRepo.cargarLibrosIniciales(librosIniciales);
 UsuariosRepo.cargarUsuariosIniciales(UsuariosIniciales);
+PrestamosRepo.cargarPrestamosIniciales(prestramosIniciales);
+
 LibrosUI.inicializar();
 UsuariosUI.inicializar();
+PrestamosUI.inicializar();
 
 console.log(`✅ UI de libros inicializada`);
 

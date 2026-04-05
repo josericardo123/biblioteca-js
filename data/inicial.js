@@ -24,7 +24,7 @@ export const librosIniciales = [
         autor: "George Orwell",
         isbn: "978-84-9759-329-8",
         anioPublicacion: 1949,
-        disponible: false,
+        disponible: true,
         fechaRegistro: "2024-01-15"
     }
 ];
@@ -58,3 +58,15 @@ export const UsuariosIniciales = [
         prestamosActivos: 0
     }
 ];
+
+export const prestramosIniciales = [{
+    id: 1,
+    libroId: 3,
+    usuarioId: 2,
+    fechaPrestamo: "2024-01-20",
+    fechaDevolucion: "2024-02-03",
+    fechaRealDevolucion: null,
+    estado: "activo",
+    renovaciones: 0
+}];
+
