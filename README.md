@@ -51,9 +51,9 @@ Sistema de gestión de biblioteca desarrollado con **JavaScript puro** como part
 - [x] Historial de préstamos
 
 ### Fase 4 - Módulo de Préstamos
-- [ ] Préstamo de libros
-- [ ] Devolución y cálculo de multas
-- [ ] Fechas de vencimiento
+- [x] Préstamo de libros
+- [x] Devolución y cálculo de multas
+- [x] Fechas de vencimiento
 
 ## 🛠️ Tecnologías Utilizadas
 
