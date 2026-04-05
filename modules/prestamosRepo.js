@@ -4,7 +4,7 @@ import { LibrosRepo } from "./librosRepo.js";
 import { UsuariosRepo } from "./usuariosRepo.js";
 
 /**
- * Repositorio para para gestión de préstamos
+ * Repositorio para gestión de préstamos
  */
 export const PrestamosRepo = (() => {
     let prestamos = [];
@@ -14,7 +14,7 @@ export const PrestamosRepo = (() => {
      * Carga préstamos iniciales
      */
     const cargarPrestamosIniciales = (prestamosIniciales) => {
-        if(!Validaciones.isValidArray(prestamosIniciales)) return;
+        if (!Validaciones.isValidArray(prestamosIniciales)) return;
 
         prestamosIniciales.forEach(prestamoData => {
             try {
@@ -29,7 +29,7 @@ export const PrestamosRepo = (() => {
                 prestamo.renovaciones = prestamoData.renovaciones;
                 prestamo.fechaRealDevolucion = prestamoData.fechaRealDevolucion;
                 prestamos.push(prestamo);
-            } catch(error) {
+            } catch (error) {
                 console.error(`❌ Error al cargar préstamo: ${error.message}`);
             }
         });
@@ -48,15 +48,27 @@ export const PrestamosRepo = (() => {
      * Buscar préstamos por ID
      */
     const obtenerPorId = (id) => {
-        if(!Validaciones.isValidId(id, { permitirString: true })) return null;
-
-        const prestamo = prestamo.find(p => p.id === Number(id));
-
-        if(!prestamo) {
-            console.error(`❌ No se encontró préstamo con ID ${id}`);
-            return;
+        console.log(`🔍 obtenerPorId llamado con ID: ${id}, tipo: ${typeof id}`);
+        
+        if (id === null || id === undefined) {
+            console.error('❌ obtenerPorId: ID es null o undefined');
+            return null;
         }
-
+        
+        const idNumerico = Number(id);
+        if (isNaN(idNumerico) || idNumerico <= 0) {
+            console.error(`❌ obtenerPorId: ID inválido: ${id} -> ${idNumerico}`);
+            return null;
+        }
+        
+        const prestamo = prestamos.find(p => p.id === idNumerico);
+        
+        if (!prestamo) {
+            console.log(`❌ No se encontró préstamo con ID ${idNumerico}`);
+            return null;
+        }
+        
+        console.log(`✅ Préstamo encontrado: ${prestamo.id}`);
         return prestamo;
     };
 
@@ -66,46 +78,52 @@ export const PrestamosRepo = (() => {
     const crearPrestamo = (libroId, usuarioId, fechaPrestamo) => {
         try {
             // Validar IDs 
-            if(!Validaciones.isValidId(libroId)) throw new Error(`ID de libro inválido`);
-            if(!Validaciones.isValidId(usuarioId)) throw new Error(`ID de usuario inválido`);
+            if (!Validaciones.isValidId(libroId)) throw new Error(`ID de libro inválido`);
+            if (!Validaciones.isValidId(usuarioId)) throw new Error(`ID de usuario inválido`);
 
             // Verificar que el libro existe
             const libro = LibrosRepo.obtenerPorId(libroId);
-            if(!libro) throw new Error(`Libro no encontrado`);
+            if (!libro) throw new Error(`Libro no encontrado`);
 
             // Verificar que libro está disponible 
-            if(!libro.disponible) throw new Error(`El libro no esta disponible`);
+            if (!libro.disponible) throw new Error(`El libro no está disponible`);
 
             // Verificar que el usuario existe
             const usuario = UsuariosRepo.obtenerPorId(usuarioId);
-            if(!usuario) throw new Error(`Usuario no encotrado`);
+            if (!usuario) throw new Error(`Usuario no encontrado`);
 
             // Verificar que usuario está activo
-            if(!usuario.activo) throw new Error(`El usuario está inctivo`);
+            if (!usuario.activo) throw new Error(`El usuario está inactivo`);
 
-            // Verificar límite de préstamos por (máximo 3)
+            // Verificar límite de préstamos por usuario (máximo 3)
             const prestamosActivos = prestamos.filter(p => 
                 p.usuarioId === usuarioId && p.estado === 'activo'
             );
-            if(prestamosActivos.length >= 3) {
+            if (prestamosActivos.length >= 3) {
                 throw new Error('El usuario ya tiene 3 préstamos activos (límite máximo)');
             }
 
+            // ✅ CORREGIDO: Crear préstamo con los datos correctos
             const nuevoPrestamo = new Prestamo({
-                libroId, siguienteId, fechaPrestamo
+                libroId: libroId,
+                usuarioId: usuarioId,
+                fechaPrestamo: fechaPrestamo
             });
+            
+            // ✅ CORREGIDO: Asignar ID y agregar al array
             nuevoPrestamo.id = siguienteId++;
-            nuevoPrestamo.push(nuevoPrestamo);
+            prestamos.push(nuevoPrestamo);
 
             // Actualizar disponibilidad del libro
             libro.prestar();
 
-            // Actualiza contador de préstamos del usuario
+            // Actualizar contador de préstamos del usuario
             usuario.incrementarPrestamos();
 
-            console.log(`✅ Préstamo creado: Libro "${libro.titulo}" - Usuario "${usuario.nombre}"`);
+            console.log(`✅ Préstamo creado: Libro "${libro.titulo}" → Usuario "${usuario.nombre}"`);
             return nuevoPrestamo;
-        } catch(error) {
+            
+        } catch (error) {
             console.error(`❌ Error al crear préstamo: ${error.message}`);
             return null;
         }
@@ -115,32 +133,45 @@ export const PrestamosRepo = (() => {
      * Registrar devolución
      */
     const registrarDevolucion = (prestamoId) => {
+        console.log(`📖 registrarDevolucion llamado con ID: ${prestamoId}, tipo: ${typeof prestamoId}`);
+        
+        if (!prestamoId || isNaN(prestamoId) || prestamoId <= 0) {
+            console.error(`❌ ID de préstamo inválido: ${prestamoId}`);
+            return null;
+        }
+        
         try {
             const prestamo = obtenerPorId(prestamoId);
-            if(!prestamo) throw new Error('Préstamo no encontrado');
-            if(!prestamo.estado !== 'activo') {
+            if (!prestamo) throw new Error(`Préstamo no encontrado con ID: ${prestamoId}`);
+            
+            if (prestamo.estado !== 'activo') {
                 throw new Error('Este préstamo ya fue devuelto');
             }
 
-            // Registrar devolucion
+            // Registrar devolución
             prestamo.registrarDevolucion();
 
             // Devolver libro
             const libro = LibrosRepo.obtenerPorId(prestamo.libroId);
-            if(libro) libro.devolver();
+            if (libro && !libro.disponible) {
+                libro.devolver();
+            } else if (libro && libro.disponible) {
+                console.log(`⚠️ El libro "${libro.titulo}" ya estaba disponible, no se modificó`);
+            }
 
             // Decrementar contador de préstamos del usuario
-            const usuario = UsuariosRepo.obtenerPorId(prestamo.usuarioId)
-            if(usuario) usuario.decrementarPrestamos();
+            const usuario = UsuariosRepo.obtenerPorId(prestamo.usuarioId);
+            if (usuario) usuario.decrementarPrestamos();
 
-            // Calcular multa si aplica
+            // Calcular multa si aplica (solo console.log, no mostrarMensaje)
             const multa = prestamo.calcularMulta();
-            if(multa > 0) {
-                console.log(`💰 Multa por retraso $${multa} pesos`);
+            if (multa > 0) {
+                console.log(`💰 Multa por retraso: $${multa} pesos`);
             }
 
             return prestamo;
-        } catch(error) {
+            
+        } catch (error) {
             console.error(`❌ Error al registrar devolución: ${error.message}`);
             return null;
         }
@@ -150,13 +181,22 @@ export const PrestamosRepo = (() => {
      * Renovar préstamo
      */
     const renovarPrestamo = (prestamoId, diasExtra = 7) => {
+        console.log(`🔄 Renovar préstamo llamado con ID: ${prestamoId}`);
+        
+        if (!prestamoId || isNaN(prestamoId) || prestamoId <= 0) {
+            console.error(`❌ ID de préstamo inválido: ${prestamoId}`);
+            return null;
+        }
+        
         try {
             const prestamo = obtenerPorId(prestamoId);
-            if(!prestamo) throw new Error(`Préstamo no encontrado`);
+            if (!prestamo) throw new Error(`Préstamo no encontrado con ID: ${prestamoId}`);
 
             prestamo.renovar(diasExtra);
+            console.log(`✅ Préstamo ${prestamoId} renovado hasta: ${prestamo.fechaDevolucion}`);
             return prestamo;
-        } catch(error) {
+            
+        } catch (error) {
             console.error(`❌ Error al renovar préstamo: ${error.message}`);
             return null;
         }
@@ -173,7 +213,7 @@ export const PrestamosRepo = (() => {
      * Obtener préstamos por usuario
      */
     const obtenerPorUsuario = (usuarioId) => {
-        return prestamos.filter(p => p.usuarioId == usuarioId);
+        return prestamos.filter(p => p.usuarioId === usuarioId);
     };
 
     /**
@@ -184,17 +224,17 @@ export const PrestamosRepo = (() => {
     };
 
     /**
-     * Obtener préstamos vencidos (no deveultos)
+     * Obtener préstamos vencidos (no devueltos)
      */
     const obtenerVencidos = () => {
         const hoy = new Date();
-        hoy.setHours(0,0,0,0);
+        hoy.setHours(0, 0, 0, 0);
 
         return prestamos.filter(p => {
-            if(p.estado !== 'activo') return false;
+            if (p.estado !== 'activo') return false;
             const fechaDevolucion = new Date(p.fechaDevolucion);
-            fechaDevolucion.setHours(0,0,0,0);
-            return fechaDevolucion < hoy
+            fechaDevolucion.setHours(0, 0, 0, 0);
+            return fechaDevolucion < hoy;
         });
     };
 
@@ -209,5 +249,5 @@ export const PrestamosRepo = (() => {
         obtenerPorUsuario,
         obtenerPorLibro,
         obtenerVencidos
-    }
+    };
 })();

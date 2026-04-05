@@ -132,6 +132,111 @@
                     </table>
                 </div>
             </section>
+            <section id="prestamos-section" class="section">
+                <h2>🔄 Gestión de Préstamos</h2>
+                <div class="form-container">
+                    <h3>➕ Nuevo préstamo</h3>
+                    <form id="prestamo-form">
+                        <div class="form-group">
+                            <label for="libro-id">Libro *</label>
+                            <select name="" id="libro-id" required="required">
+                                <option value="">Seleccionar libro...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="usuario-id">Usuario *</label>
+                            <select name="" id="usuario-id" required="required">
+                                <option value="">Seleccionar usuario...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha-prestamo">Fecha préstamos *</label>
+                            <input type="date" id="fecha-prestamo" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="dias-prestamo">Días préstamo *</label>
+                            <select name="" id="dias-prestamo">
+                                <option value="7">7 días (1 semana)</option>
+                                <option value="14">14 días (2 semana)</option>
+                                <option value="21">21 días (3 semana)</option>
+                                <option value="30">30 días (1 mes)</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">📖 Crear préstamo</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="activos">📋 Préstamos activos</button>
+                    <button class="tab-btn" data-tab="historial">📜 Historial</button>
+                    <button class="tab-btn" data-tab="vencidos">⚠️ Vencidos</button>
+                </div>
+                <div class="table-container tab-container active" id="tab-activos">
+                    <div class="search-bar">
+                        <input type="text" id="buscar-prestamo" placeholder="🔍 Buscar por libro o por usuario...">
+                        <button id="btn-buscar-prestamo" class="btn-search">Buscar</button>
+                        <button id="btn-mostrar-todos-prestamos" class="btn-search">Mostrar todos</button>
+                    </div>
+                    <table id="prestamos-table" class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Libro</th>
+                                <th>Usuario</th>
+                                <th>Préstamo</th>
+                                <th>Vencimiento</th>
+                                <th>Dias restantes</th>
+                                <th>Renovaciones</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="prestamos-tbody">
+                            <tr>
+                                <td colspan="8" style="text-align: center;">Cargando préstamos...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-container tab-content" id="tab-historial" style="display: none;">
+                    <table id="historial-table" class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Libro</th>
+                                <th>Usuario</th>
+                                <th>Préstamo</th>
+                                <th>Devolución</th>
+                                <th>Fecha real</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historial-tbody">
+                            <tr><td colspan="7" style="text-align: center;">Cargando historial...</td><tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-container tab-content" id="tab-vencidos" style="display: none;">
+                    <table id="vencidos-table" class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Libro</th>
+                                <th>Usuario</th>
+                                <th>Vencimiento</th>
+                                <th>Dias vencido</th>
+                                <th>Multa</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vencidos-tbody">
+                            <tr>
+                                <td colspan="7" style="text-align: center;">Cargando préstamos vencidos...</td>
+                            <tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         </main>
         <script type="module" src="modules/app.js"></script>
     </body>

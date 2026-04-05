@@ -1,7 +1,7 @@
 import { Validaciones } from '../utils/validaciones.js';
 
 /**
- * Clase que representa un préstamos en el sistema
+ * Clase que representa un préstamo en el sistema
  */
 export class Prestamo {
     /**
@@ -9,28 +9,29 @@ export class Prestamo {
      * @param {Object} datos - Datos del préstamo
      * @param {number} datos.libroId - ID del libro
      * @param {number} datos.usuarioId - ID del usuario
-     * @param {string} datos.fechaPrestamo - Fecha del préstamos (YYYY-MM-DD)
-     * @param {number} datos.diasPrestamo - Días de préstamo (por defecto: 14)
+     * @param {string} datos.fechaPrestamo - Fecha del préstamo (YYYY-MM-DD)
+     * @param {number} diasPrestamo - Días de préstamo (por defecto: 14)
      */
     constructor(datos, diasPrestamo = 14) {
         // Validaciones
-        if(!Validaciones.isValidId(datos.libroId)) {
-            throw new Error(`ID de libro inválido`);
+        if (!Validaciones.isValidId(datos.libroId)) {
+            throw new Error('ID de libro inválido');
         }
 
-        if(!Validaciones.isValidId(datos.usuarioId)) {
+        if (!Validaciones.isValidId(datos.usuarioId)) {
             throw new Error('ID de usuario inválido');
         }
 
-        if(!Validaciones.isValidString(datos.fechaPrestamo, true)) {
+        // ✅ CORREGIDO: usar isValidDate, no isValidString
+        if (!Validaciones.isValidDate(datos.fechaPrestamo, true)) {
             throw new Error('Fecha de préstamo inválida');
         }
 
         // Propiedades
-        this.id = null,
-        this.libroId = datos.libroId,
-        this.usuarioId = datos.usuarioId,
-        this.fechaPrestamo = datos.fechaPrestamo,
+        this.id = null;
+        this.libroId = datos.libroId;
+        this.usuarioId = datos.usuarioId;
+        this.fechaPrestamo = datos.fechaPrestamo;
         this.fechaDevolucion = this.calcularFechaDevolucion(datos.fechaPrestamo, diasPrestamo);
         this.fechaRealDevolucion = null;
         this.estado = 'activo';
@@ -49,7 +50,7 @@ export class Prestamo {
     /**
      * Convierte a objeto plano
      */
-    toJSON(){
+    toJSON() {
         return {
             id: this.id,
             libroId: this.libroId,
@@ -59,18 +60,22 @@ export class Prestamo {
             fechaRealDevolucion: this.fechaRealDevolucion,
             estado: this.estado,
             renovaciones: this.renovaciones
-        }
+        };
     }
 
+    /**
+     * Registrar devolución
+     */
     registrarDevolucion() {
-        if(this.estado !== 'activo') {
+        if (this.estado !== 'activo') {
             throw new Error('Este préstamo ya está devuelto o cancelado');
         }
 
-        this.fechaDevolucion = new Date().toISOString().split('T')[0];
+        // ✅ CORREGIDO: guardar fecha real de devolución
+        this.fechaRealDevolucion = new Date().toISOString().split('T')[0];
         this.estado = 'devuelto';
 
-        console.log(`✅ Préstamo ID ${this.id} devuelto`);
+        console.log(`✅ Préstamo ID ${this.id} devuelto el ${this.fechaRealDevolucion}`);
 
         return this;
     }
@@ -79,11 +84,11 @@ export class Prestamo {
      * Renovar préstamo
      */
     renovar(diasExtra = 7) {
-        if(this.estado !== 'activo') {
+        if (this.estado !== 'activo') {
             throw new Error('Solo se pueden renovar préstamos activos');
         }
         
-        if(this.renovaciones >= 2) {
+        if (this.renovaciones >= 2) {
             throw new Error('Máximo 2 renovaciones permitidas');
         }
 
@@ -92,7 +97,7 @@ export class Prestamo {
         this.fechaDevolucion = nuevaFecha.toISOString().split('T')[0];
         this.renovaciones++;
 
-        console.log(`✅ Préstamo ID ${this.id} renovado. Nueva fecha: ${this.fechaDevolucion}`);
+        console.log(`🔄 Préstamo ID ${this.id} renovado. Nueva fecha: ${this.fechaDevolucion}`);
         return this;
     }
 
@@ -100,14 +105,14 @@ export class Prestamo {
      * Calcular días de retraso
      */
     calcularRetraso() {
-        if(this.estado !== 'activo') return 0;
+        if (this.estado !== 'activo') return 0;
 
         const hoy = new Date();
         const fechaDevolucion = new Date(this.fechaDevolucion);
-        hoy.setHours(0,0,0,0);
-        fechaDevolucion.setHours(0,0,0,0);
+        hoy.setHours(0, 0, 0, 0);
+        fechaDevolucion.setHours(0, 0, 0, 0);
 
-        if(hoy <= fechaDevolucion) return 0;
+        if (hoy <= fechaDevolucion) return 0;
 
         const diferencia = hoy - fechaDevolucion;
         return Math.ceil(diferencia / (1000 * 60 * 60 * 24));

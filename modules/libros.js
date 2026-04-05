@@ -79,9 +79,10 @@ export class Libro {
      */
     devolver() {
         if (this.disponible) {
-            throw new Error("El libro ya está disponible");
+            console.log(`⚠️ El libro "${this.titulo}" ya estaba disponible`);
+            return;
         }
-
+        
         this.disponible = true;
         console.log(`📖 Libro "${this.titulo}" devuelto`);
     }

@@ -24,7 +24,7 @@ export const librosIniciales = [
         autor: "George Orwell",
         isbn: "978-84-9759-329-8",
         anioPublicacion: 1949,
-        disponible: false,
+        disponible: true,
         fechaRegistro: "2024-01-15"
     }
 ];
