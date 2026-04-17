@@ -56,7 +56,8 @@ Sistema de gestión de biblioteca desarrollado con **JavaScript puro** como part
 - [x] Fechas de vencimiento
 
 ### FASE 1: Persistencia con localStorage (SPRINT 5)
-    - [] Persistencia de datos utils/persistencia.js
+    - [x] Persistencia de datos utils/persistencia.js
+    - [x] Botones de reseteo UI 
     
 ### FASE 2: Mejora de UI/UX (SPRINT 6)
     ↓
