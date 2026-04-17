@@ -1,5 +1,6 @@
 import { Validaciones } from "../utils/validaciones.js";
 import { Libro } from "./libros.js";
+import { Persistencia } from "../utils/persistencia.js";
 
 /**
  * Repositorio para la gestión de libros
@@ -12,22 +13,48 @@ export const LibrosRepo = (() => {
     let siguienteId = 1;
 
     /**
+     * Guardar libros en localStorage
+     */
+    const guardarEnStorage = () => {
+        const dataParaGuardar = libros.map(libro => libro.toJSON());
+        Persistencia.guardar(Persistencia.KEYS.LIBROS, dataParaGuardar);
+    };
+
+    /**
      * Carga los libros iniciales desde los datos de ejemplo
      * @param {Array} librosIniciales - Array de objetos con datos de libros
      */
     const cargarLibrosIniciales = (librosIniciales) => {
-        if (!Validaciones.isValidArray(librosIniciales)) return;
+        // Intentar cargar desde localStorage
+        const datosGuardados = Persistencia.cargar(Persistencia.KEYS.LIBROS);
 
-        librosIniciales.forEach((libroData) => {
-            try {
+        if(datosGuardados && datosGuardados.length > 0) {
+            // Recuperar datos guardados
+            datosGuardados.forEach(libroData => {
                 const libro = new Libro(libroData);
-                libro.id = siguienteId++;
+                libro.id = libroData.id;
+                libro.disponible = libroData.disponible;
+                libro.fechaRegistro = libroData.fechaRegistro;
                 libros.push(libro);
-            } catch (error) {
-                console.error(`❌ Error al cargar libro: ${error.message}`);
-            }
-        });
-        console.log(`✅ Cargados ${libros.length} libros iniciales`);
+                if(libro.id >= siguienteId) {
+                    siguienteId = libro.id + 1;
+                }
+            });
+        } else {
+            if (!Validaciones.isValidArray(librosIniciales)) return;
+
+            librosIniciales.forEach((libroData) => {
+                try {
+                    const libro = new Libro(libroData);
+                    libro.id = siguienteId++;
+                    libros.push(libro);
+                } catch (error) {
+                    console.error(`❌ Error al cargar libro: ${error.message}`);
+                }
+            });
+            console.log(`✅ Cargados ${libros.length} libros iniciales`);
+            guardarEnStorage();
+        }
     };
 
     /**
@@ -78,6 +105,8 @@ export const LibrosRepo = (() => {
             nuevoLibro.id = siguienteId++;
             libros.push(nuevoLibro);
 
+            guardarEnStorage();
+
             console.log(`✅ Libro "${nuevoLibro.titulo}" agregado (ID: ${nuevoLibro.id})`);
             return nuevoLibro;
         } catch (error) {
@@ -124,7 +153,12 @@ export const LibrosRepo = (() => {
                 libro.anioPublicacion = datosActualizados.anioPublicacion;
             }
 
-            libro.disponible = datosActualizados.disponible;
+            
+            if(libro.disponible !== undefined) {
+                libro.disponible = datosActualizados.disponible;
+            }
+
+            guardarEnStorage();
 
             console.log(`✅ Libro "${libro.titulo}" actualizado`);
             return libro;
@@ -146,6 +180,7 @@ export const LibrosRepo = (() => {
 
             const index = libros.findIndex(l => l.id === libro.id);
             libros.splice(index, 1);
+            guardarEnStorage();
             console.log(`✅ Libro "${libro.titulo}" eliminado (ID: ${libro.id})`);
             return true;
         } catch (error) {
@@ -203,5 +238,21 @@ export const LibrosRepo = (() => {
         buscar,
         obtenerDisponibles,
         obtenerPrestados,
+        prestar: (id) => {
+            const libro = obtenerPorId(id);
+            if(libro) {
+                libro.prestar();
+                guardarEnStorage();
+            }
+            return libro;
+        },
+        devolver: (id) => {
+            const libro = obtenerPorId(id);
+            if(libro) {
+                libro.devolver();
+                guardarEnStorage();
+            }
+            return libro;
+        }
     };
 })();

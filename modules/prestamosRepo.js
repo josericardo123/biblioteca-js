@@ -2,6 +2,7 @@ import { Validaciones } from "../utils/validaciones.js";
 import { Prestamo } from "./prestamos.js";
 import { LibrosRepo } from "./librosRepo.js";
 import { UsuariosRepo } from "./usuariosRepo.js";
+import { Persistencia } from "../utils/persistencia.js";
 
 /**
  * Repositorio para gestión de préstamos
@@ -10,31 +11,59 @@ export const PrestamosRepo = (() => {
     let prestamos = [];
     let siguienteId = 1;
 
+    const guardarEnStorage = () => {
+        const dataParaGuardar = prestamos.map(prestamo => prestamo.toJSON());
+        Persistencia.guardar(Persistencia.KEYS.PRESTAMOS, dataParaGuardar);
+    };
+    
     /**
      * Carga préstamos iniciales
      */
     const cargarPrestamosIniciales = (prestamosIniciales) => {
-        if (!Validaciones.isValidArray(prestamosIniciales)) return;
+        const datosGuardados = Persistencia.cargar(Persistencia.KEYS.PRESTAMOS);
 
-        prestamosIniciales.forEach(prestamoData => {
-            try {
+        if(datosGuardados && datosGuardados.length > 0) {
+            datosGuardados.forEach(prestamoData => {
                 const prestamo = new Prestamo({
                     libroId: prestamoData.libroId,
                     usuarioId: prestamoData.usuarioId,
                     fechaPrestamo: prestamoData.fechaPrestamo
                 });
-                prestamo.id = siguienteId++;
+                prestamo.id = prestamoData.id;
                 prestamo.fechaDevolucion = prestamoData.fechaDevolucion;
                 prestamo.estado = prestamoData.estado;
                 prestamo.renovaciones = prestamoData.renovaciones;
                 prestamo.fechaRealDevolucion = prestamoData.fechaRealDevolucion;
                 prestamos.push(prestamo);
-            } catch (error) {
-                console.error(`❌ Error al cargar préstamo: ${error.message}`);
-            }
-        });
+                if(prestamo.id >= siguienteId) {
+                    siguienteId = prestamo.id + 1;
+                }
+            });
+            console.log(`✅ Cargados ${prestamos.length} préstamos desde localStorage`);
+        } else {
+            if (!Validaciones.isValidArray(prestamosIniciales)) return;
 
-        console.log(`✅ Cargados ${prestamos.length} préstamos iniciales`);
+            prestamosIniciales.forEach(prestamoData => {
+                try {
+                    const prestamo = new Prestamo({
+                        libroId: prestamoData.libroId,
+                        usuarioId: prestamoData.usuarioId,
+                        fechaPrestamo: prestamoData.fechaPrestamo
+                    });
+                    prestamo.id = siguienteId++;
+                    prestamo.fechaDevolucion = prestamoData.fechaDevolucion;
+                    prestamo.estado = prestamoData.estado;
+                    prestamo.renovaciones = prestamoData.renovaciones;
+                    prestamo.fechaRealDevolucion = prestamoData.fechaRealDevolucion;
+                    prestamos.push(prestamo);
+                } catch (error) {
+                    console.error(`❌ Error al cargar préstamo: ${error.message}`);
+                }
+            });
+
+            console.log(`✅ Cargados ${prestamos.length} préstamos iniciales`);
+            guardarEnStorage();
+        }
     };
 
     /**
@@ -120,6 +149,8 @@ export const PrestamosRepo = (() => {
             // Actualizar contador de préstamos del usuario
             usuario.incrementarPrestamos();
 
+            guardarEnStorage();
+
             console.log(`✅ Préstamo creado: Libro "${libro.titulo}" → Usuario "${usuario.nombre}"`);
             return nuevoPrestamo;
             
@@ -169,6 +200,8 @@ export const PrestamosRepo = (() => {
                 console.log(`💰 Multa por retraso: $${multa} pesos`);
             }
 
+            guardarEnStorage();
+
             return prestamo;
             
         } catch (error) {
@@ -193,6 +226,7 @@ export const PrestamosRepo = (() => {
             if (!prestamo) throw new Error(`Préstamo no encontrado con ID: ${prestamoId}`);
 
             prestamo.renovar(diasExtra);
+            guardarEnStorage();
             console.log(`✅ Préstamo ${prestamoId} renovado hasta: ${prestamo.fechaDevolucion}`);
             return prestamo;
             

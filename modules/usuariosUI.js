@@ -106,8 +106,8 @@ export const UsuariosUI = (() => {
         modoEdicion = false;
         usuarioEditandoId = null;
         document.getElementById('form-title-usuario').textContent = '➕ Agregar nuevo usuario';
-        document.getElementById('btn-cancelar').style.display = 'none';
-        document.getElementById('btn-guardar').textContent = '💾 Guardar usuario';
+        document.getElementById('btn-cancelar-usuario').style.display = 'none';
+        document.getElementById('btn-guardar-usuario').textContent = '💾 Guardar usuario';
     };
 
     /**
@@ -191,8 +191,8 @@ export const UsuariosUI = (() => {
         modoEdicion = true;
         usuarioEditandoId = id;
         document.getElementById('form-title-usuario').textContent = '✏️ Editar usuario';
-        document.getElementById('btn-cancelar').style.display = 'inline-block';
-        document.getElementById('btn-guardar').textContent = '💾 Actualizar usuario';
+        document.getElementById('btn-cancelar-usuario').style.display = 'inline-block';
+        document.getElementById('btn-guardar-usuario').textContent = '💾 Actualizar usuario';
         document.getElementById('usuario-form').scrollIntoView({ behavior: 'smooth' });
     };
 
@@ -335,7 +335,7 @@ export const UsuariosUI = (() => {
         
         // Event listeners
         document.getElementById('usuario-form').addEventListener('submit', guardarUsuario);
-        document.getElementById('btn-cancelar').addEventListener('click', limpiarFormulario);
+        document.getElementById('btn-cancelar-usuario').addEventListener('click', limpiarFormulario);
         document.getElementById('btn-buscar-usuario').addEventListener('click', buscarUsuarios);
         document.getElementById('btn-mostrar-todos-usuarios').addEventListener('click', mostrarTodos);
         document.getElementById('buscar-usuario').addEventListener('keypress', (e) => {

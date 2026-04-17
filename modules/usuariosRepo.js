@@ -1,5 +1,6 @@
 import { Validaciones } from "../utils/validaciones.js";
 import { Usuario } from "./usuarios.js";
+import { Persistencia } from "../utils/persistencia.js";
 
 /**
  * Repositorio para la gestión de usuarios
@@ -9,26 +10,48 @@ export const UsuariosRepo = (() => {
     let usuarios = [];
     let siguienteId = 1;
 
+    // Agregar guardarEnStorage y llamar después de cada modificación
+    const guardarEnStorage = () => {
+        const dataParaGuardar = usuarios.map(usuario => usuario.toJSON());
+        Persistencia.guardar(Persistencia.KEYS.USUARIOS, dataParaGuardar);
+    };
+
     /**
      * Carga los usuarios iniciales
      */
     const cargarUsuariosIniciales = (usuariosIniciales) => {
-        if(!Validaciones.isValidArray(usuariosIniciales)) return;
+        const datosGuardados = Persistencia.cargar(Persistencia.KEYS.USUARIOS);
 
-        usuariosIniciales.forEach(usuarioData => {
-            try {
+        if(datosGuardados && datosGuardados.length > 0) {
+            datosGuardados.forEach(usuarioData => {
                 const usuario = new Usuario(usuarioData);
-                usuario.id = siguienteId++;
-                usuario.fechaRegistro = usuarioData.fechaRegistro || usuario.fechaRegistro;
-                usuario.prestamosActivos = usuarioData.prestamosActivos || 0;
+                usuario.id = usuarioData.id;
+                usuario.fechaRegistro = usuarioData.fechaRegistro;
+                usuario.prestamosActivos = usuarioData.prestamosActivos;
                 usuarios.push(usuario);
+                if(usuario.id >= siguienteId) {
+                    siguienteId = usuario.id + 1;
+                }
+            });
+        } else {
+            if(!Validaciones.isValidArray(usuariosIniciales)) return;
 
-            } catch(error) {
-                console.error(`❌ Error al cargar usuario: ${error.message}`);
-            }
-        });
+            usuariosIniciales.forEach(usuarioData => {
+                try {
+                    const usuario = new Usuario(usuarioData);
+                    usuario.id = siguienteId++;
+                    usuario.fechaRegistro = usuarioData.fechaRegistro || usuario.fechaRegistro;
+                    usuario.prestamosActivos = usuarioData.prestamosActivos || 0;
+                    usuarios.push(usuario);
 
-        console.log(`✅ Cargados ${usuarios.length} usuarios iniciales`);
+                } catch(error) {
+                    console.error(`❌ Error al cargar usuario: ${error.message}`);
+                }
+            });
+
+            console.log(`✅ Cargados ${usuarios.length} usuarios iniciales`);
+            guardarEnStorage();
+        }
     };
 
     /**
@@ -42,7 +65,7 @@ export const UsuariosRepo = (() => {
      * Busca un usuario por ID
      */
     const obtenerPorId = (id) => {
-        if(!Validaciones.isValidNumber(id, {permitirString: true})) return null;
+        if(!Validaciones.isValidId(id, {permitirString: true})) return null;
         const idNumerico = Number(id);
         const usuario = usuarios.find(u => u.id === idNumerico);
         if(!usuario) {
@@ -56,7 +79,7 @@ export const UsuariosRepo = (() => {
     /**
      * Busca un usuario por email
      */
-    const ObtenerPorEmail = (email) => {
+    const obtenerPorEmail = (email) => {
         if(!Validaciones.isValidEmail(email)) return null;
 
         return usuarios.find(u => u.email === email.toLowerCase().trim());
@@ -75,12 +98,14 @@ export const UsuariosRepo = (() => {
             const emailExistente = usuarios.some(u => u.email === datosUsuario.email.toLowerCase().trim());
 
             if(emailExistente) {
-                throw new Error(`Ya existe un usuario con email ${datosUsuario.email} : ${usuarios}`);
+                throw new Error(`Ya existe un usuario con email ${datosUsuario.email}`);
             }
 
             const nuevoUsuario = new Usuario(datosUsuario);
             nuevoUsuario.id = siguienteId++;
             usuarios.push(nuevoUsuario);
+
+             guardarEnStorage();
 
             console.log(`✅ Usuario "${nuevoUsuario.nombre}" agregado (ID: ${nuevoUsuario.id})`);
             return nuevoUsuario;
@@ -132,6 +157,8 @@ export const UsuariosRepo = (() => {
 
             usuario.activo = datosActualizados.activo ? true : false;
 
+             guardarEnStorage();
+
             console.log(`✅ Usuario ${usuario.nombre} actualizado`);
             return usuario;
 
@@ -154,6 +181,8 @@ export const UsuariosRepo = (() => {
 
             const index = usuarios.findIndex(u => u.id === usuario.id);
             usuarios.splice(index, 1);
+
+             guardarEnStorage();
 
             console.log(`✅ Usuario "${usuario.nombre}" eliminado (ID: ${usuario.id})`);
             return true;
@@ -201,12 +230,12 @@ export const UsuariosRepo = (() => {
         cargarUsuariosIniciales,
         obtenerTodos,
         obtenerPorId,
-        ObtenerPorEmail,
+        obtenerPorEmail,
         agregar,
         actualizar,
         eliminar,
         buscar,
         obtenerActivos,
         obtenerInactivos
-    };;
+    };
 })();

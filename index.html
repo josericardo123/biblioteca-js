@@ -14,7 +14,12 @@
         </header>
         <main>
             <section id="libros-section" class="section">
-                <h2>📚 Gestión de Libros</h2>
+                <div class="section-header">
+                    <h2>📚 Gestión de Libros</h2>
+                    <div class="section-actions">
+                        <button id="btn-reset-libros" class="btn-reset" title="Resetear solo libros">🔄 Resetear libros</button>
+                    </div>
+                </div>
                 <div class="form-container">
                     <h3 id="form-title">➕ Agregar nuevo libro</h3>
                     <form action="" id="libro-form">
@@ -75,7 +80,12 @@
                 </div>
             </section>
             <section id="usuarios-section" class="section">
-                <h2>👥 Gestión de Usuarios</h2>
+                <div class="section-header">
+                    <h2>👥 Gestión de Usuarios</h2>
+                    <div class="section-actions">
+                        <button id="btn-reset-usuarios" class="btn-reset" title="Resetear solo usuarios">🔄 Resetear Usuarios</button>
+                    </div>
+                </div>
                 <div class="form-container">
                     <h3 id="form-title-usuario">➕ Agregar nuevo usuario</h3>
                     <form action="" id="usuario-form">
@@ -99,8 +109,8 @@
                             </select>
                         </div>
                         <div class="form-actions">
-                            <button type="submit" id="btn-guardar" class="btn-primary">💾 Guardar usuario</button>
-                            <button type="button" id="btn-cancelar" class="btn-secondary" style="display: none;">❌ Cancelar</button>
+                            <button type="submit" id="btn-guardar-usuario" class="btn-primary">💾 Guardar usuario</button>
+                            <button type="button" id="btn-cancelar-usuario" class="btn-secondary" style="display: none;">❌ Cancelar</button>
                         </div>
                     </form>
                 </div>
@@ -133,7 +143,12 @@
                 </div>
             </section>
             <section id="prestamos-section" class="section">
-                <h2>🔄 Gestión de Préstamos</h2>
+                <div class="section-header">
+                    <h2>🔄 Gestión de Préstamos</h2>
+                    <div class="section-actions">
+                        <button id="btn-reset-prestamos" class="btn-reset" title="Resetear solo préstamos">🔄 Resetear préstamos</button>
+                    </div>
+                </div>
                 <div class="form-container">
                     <h3>➕ Nuevo préstamo</h3>
                     <form id="prestamo-form">
@@ -237,6 +252,9 @@
                     </table>
                 </div>
             </section>
+            <div class="global-actions">
+                <button id="btn-reset-todo" class="btn-reset-all">⚠️ Resetear TODO el sistama</button>
+            </div>
         </main>
         <script type="module" src="modules/app.js"></script>
     </body>
