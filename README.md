@@ -55,6 +55,17 @@ Sistema de gestión de biblioteca desarrollado con **JavaScript puro** como part
 - [x] Devolución y cálculo de multas
 - [x] Fechas de vencimiento
 
+### FASE 1: Persistencia con localStorage (SPRINT 5)
+    - [] Persistencia de datos utils/persistencia.js
+    
+### FASE 2: Mejora de UI/UX (SPRINT 6)
+    ↓
+### FASE 3: Migración a React (SPRINT 7) - Tu objetivo principal
+    ↓
+### FASE 4: Backend con Node.js (SPRINT 8)
+    ↓
+### FASE 5: Despliegue en producción (SPRINT 9)
+
 ## 🛠️ Tecnologías Utilizadas
 
 - **HTML5** - Estructura semántica

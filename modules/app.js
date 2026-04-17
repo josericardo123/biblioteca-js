@@ -9,6 +9,7 @@ import { UsuariosUI } from "./usuariosUI.js";
 import { PrestamosRepo } from "./prestamosRepo.js";
 import { prestramosIniciales } from "../data/inicial.js";
 import { PrestamosUI } from "./prestamosUI.js";
+import { Persistencia } from "../utils/persistencia.js";
 
 // console.log(
 //     "%c📚 SPRINT 2 - SPRINT 3 MODULO DE LIBROS, MODULO DE USUARIOS",
@@ -29,6 +30,65 @@ UsuariosUI.inicializar();
 PrestamosUI.inicializar();
 
 console.log(`✅ UI de libros inicializada`);
+
+const resetearLibros = () => {
+    if(confirm('⚠️ ¿Resetear SOLO los libros?\n\nSe perderán todos los cambios en libros.\nLos usuarios y préstamos no se verán afectados.')) {
+        localStorage.removeItem(Persistencia.KEYS.LIBROS);
+        mostrarMensajeGlobal('🔄 Libros restablecidos. Recargando página...', 'info');
+        setTimeout(() => {
+            location.reload();
+        }, 1000);
+    }
+};
+
+const resetearUsuarios = () => {
+    if (confirm('⚠️ ¿Resetear SOLO los usuarios?\n\nSe perderán todos los cambios en usuarios.\nLos libros y préstamos no se verán afectados.')) {
+        localStorage.removeItem(Persistencia.KEYS.USUARIOS);
+        mostrarMensajeGlobal('🔄 Usuarios restablecidos. Recargando página...', 'info');
+        setTimeout(() => location.reload(), 1000);
+    }
+};
+
+const resetearPrestamos = () => {
+    if (confirm('⚠️ ¿Resetear SOLO los préstamos?\n\nSe perderán todos los cambios en préstamos.\nLos libros y usuarios no se verán afectados.')) {
+        localStorage.removeItem(Persistencia.KEYS.PRESTAMOS);
+        mostrarMensajeGlobal('🔄 Préstamos restablecidos. Recargando página...', 'info');
+        setTimeout(() => location.reload(), 1000);
+    }
+};
+
+const resetearTodo = () => {
+    if (confirm('⚠️ ¡RESET TOTAL! ⚠️\n\nEsta acción eliminará TODOS los datos:\n- Libros\n- Usuarios\n- Préstamos\n\nSe restaurarán los valores iniciales.\n\n¿Estás completamente seguro?')) {
+        Persistencia.limpiar();
+        mostrarMensajeGlobal('⚠️ Todos los datos han sido restablecidos. Recargando página...', 'warning');
+        setTimeout(() => location.reload(), 1000);
+    }
+};
+
+const mostrarMensajeGlobal = (mensaje, tipo = 'info') => {
+    const mensajeDiv = document.createElement('div');
+    mensajeDiv.className = `mensaje-global mensaje-${tipo}`;
+    mensajeDiv.textContent = mensaje;
+    document.body.insertBefore(mensajeDiv, document.body.firstChild);
+
+    setTimeout(() => {
+        mensajeDiv.remove();
+    }, 2000);
+};
+
+const btnResetLibros = document.getElementById('btn-reset-libros');
+if(btnResetLibros) btnResetLibros.addEventListener('click', resetearLibros);
+
+const btnResetUsuarios = document.getElementById('btn-reset-usuarios');
+if (btnResetUsuarios) btnResetUsuarios.addEventListener('click', resetearUsuarios);
+
+const btnResetPrestamos = document.getElementById('btn-reset-prestamos');
+if (btnResetPrestamos) btnResetPrestamos.addEventListener('click', resetearPrestamos);
+
+// Botón de reset global
+const btnResetTodo = document.getElementById('btn-reset-todo');
+if (btnResetTodo) btnResetTodo.addEventListener('click', resetearTodo);
+
 
 // // Cargar libros iniciales
 // LibrosRepo.cargarLibrosIniciales(librosIniciales);
